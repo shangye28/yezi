@@ -1,19 +1,17 @@
-package com.example.sshtest.Dao;
+package com.example.sshtest.dao;
 
+import com.example.sshtest.pojo.Role;
 import com.example.sshtest.pojo.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
-@Repository
-public interface UserDao extends CrudRepository<User,Integer> {
-
-    @Query(value = "select * from user where username = :username", nativeQuery = true)
-    User findByUsername(@Param("username") String username);
-
-    @Query(value = "select * from user where nickname = :nickname", nativeQuery = true)
-    User findByNickname(@Param("nickname") String nickname);
+public interface UserDao {
+    public List<User> findByAll();
+    public List<User> findByUsername(String username);
+    public List<User> findByNickname(String nickname);
+    public User getByUsername(String username);
+    public void delete(User user);
+    public void save(User user);
+    public void updata(User user);
 }

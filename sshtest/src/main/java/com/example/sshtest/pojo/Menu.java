@@ -1,29 +1,15 @@
 package com.example.sshtest.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 菜单信息
  */
-// lombok
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-// Jpa规范，必须标识这是个entity，指向对应table，两者关联。
 @Entity
 @Table(name = "menu")
 public class Menu {
-    // Jpa规范，必须有一个唯一标识标识，此注解标识标识成员属性id为唯一标识。
     @Id
-    // Jpa规范，唯一标识必须有增长策略
     @GeneratedValue(generator = "menu",strategy = GenerationType.IDENTITY)
     private Integer menuId;              //菜单ID
     @Column(name = "menuName")
@@ -45,4 +31,91 @@ public class Menu {
 
 //    private List<Menu> children = new ArrayList<>();       //子菜单
 
+
+    public Integer getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getMenuSort() {
+        return menuSort;
+    }
+
+    public void setMenuSort(String menuSort) {
+        this.menuSort = menuSort;
+    }
+
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuId=" + menuId +
+                ", menuName='" + menuName + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", menuSort='" + menuSort + '\'' +
+                ", menuType='" + menuType + '\'' +
+                ", status='" + status + '\'' +
+                ", permission='" + permission + '\'' +
+                ", icon='" + icon + '\'' +
+                '}';
+    }
 }

@@ -1,29 +1,15 @@
 package com.example.sshtest.pojo;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * 用户信息
  */
-// lombok
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-// Jpa规范，必须标识这是个entity，指向对应table，两者关联。
 @Entity
 @Table(name = "user")
 public class User {
-    // Jpa规范，必须有一个唯一标识标识，此注解标识标识成员属性id为唯一标识。
     @Id
-    // Jpa规范，唯一标识必须有增长策略
     @GeneratedValue(generator = "user",strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Integer userId;
@@ -55,5 +41,99 @@ public class User {
     @Column(name = "remake")
     private String remake;
 
+    public Integer getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getRemake() {
+        return remake;
+    }
+
+    public void setRemake(String remake) {
+        this.remake = remake;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", sex='" + sex + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", status='" + status + '\'' +
+                ", phone='" + phone + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", remake='" + remake + '\'' +
+                '}';
+    }
 }

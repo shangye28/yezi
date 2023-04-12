@@ -22,27 +22,18 @@ public enum RCode {
     FAIL(false,500, "失败");
 
     /**
-     * @Author DragonOne
-     * @Date 2022/3/4 11:54
-     * @墨水记忆 www.tothefor.com
      * @属性 statusFlag
      * @作用 判断是否成功
      */
     private Boolean statusFlag;
 
     /**
-     * @Author DragonOne
-     * @Date 2022/3/4 11:56
-     * @墨水记忆 www.tothefor.com
      * @属性 statusCode
      * @作用 返回结果状态码
      */
     private Integer statusCode;
 
     /**
-     * @Author DragonOne
-     * @Date 2022/3/4 11:56
-     * @墨水记忆 www.tothefor.com
      * @属性 statusMessage
      * @作用 提示信息
      */
