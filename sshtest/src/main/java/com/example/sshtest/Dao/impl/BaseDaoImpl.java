@@ -34,12 +34,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 //        this.getCurrentSession().saveOrUpdate(o);
 //    }
 
-    public List<T> find(String hql) {
-        return this.entityManager.createNativeQuery(hql).getResultList();
+    public List<T> find(String hql, Class resultClass) {
+        Query q = this.entityManager.createQuery(hql,resultClass);
+        List<T> resultList = q.getResultList();
+        return resultList;
     }
 
-    public List<T> find(String hql, Map<String,Object> parameters) {
-        Query q = this.entityManager.createNativeQuery(hql);
+    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass) {
+        Query q = this.entityManager.createQuery(hql,resultClass);
         Iterator<Map.Entry<String,Object>> entries = parameters.entrySet().iterator();
         while (entries.hasNext()) {
             Map.Entry<String,Object> entry = entries.next();
@@ -54,6 +56,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         }
         return resultList;
     }
+
+//    public Pager<T> pageList(String hql, Class resultClass){
+//        return null;
+//    }
+//
+//    public Pager<T> pageList(String hql, Map<String,Object> parameters){
+//        return null;
+//    }
 
 //    public List<T> find(String hql, Object[] param) {
 //        Query q = this.entityManager.createNativeQuery(hql);
@@ -112,8 +122,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 //        return (T) this.getCurrentSession().get(c, id);
 //    }
 //
-    public T get(String hql, Map<String,Object> parameters) {
-        List<T> l = this.find(hql, parameters);
+    public T  get(String hql, Map<String,Object> parameters, Class resultClass) {
+        List<T> l = this.find(hql, parameters, resultClass);
         if (l != null && l.size() > 0) {
             return l.get(0);
         } else {
@@ -129,11 +139,24 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 //            return null;
 //        }
 //    }
-//
-//    public Long count(String hql) {
-//        return (Long) this.getCurrentSession().createQuery(hql).uniqueResult();
-//    }
-//
+
+    public Long count(String hql) {
+        Query q = this.entityManager.createQuery(hql);
+        Long result = (Long) q.getSingleResult();
+        return result;
+    }
+
+    public Long count(String hql, Map<String,Object> parameters) {
+        Query q = this.entityManager.createQuery(hql);
+        Iterator<Map.Entry<String,Object>> entries = parameters.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String,Object> entry = entries.next();
+            q.setParameter(entry.getKey(),entry.getValue());
+        }
+        Long result = (Long) q.getSingleResult();
+        return result;
+    }
+
 //    public Long count(String hql, Object[] param) {
 //        Query q = this.getCurrentSession().createQuery(hql);
 //        if (param != null && param.length > 0) {
@@ -143,7 +166,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 //        }
 //        return (Long) q.uniqueResult();
 //    }
-//
+
 //    public Long count(String hql, List<Object> param) {
 //        Query q = this.getCurrentSession().createQuery(hql);
 //        if (param != null && param.size() > 0) {

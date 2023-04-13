@@ -1,7 +1,7 @@
 package com.example.sshtest.dao;
 
 
-import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -29,20 +29,14 @@ public interface BaseDao<T>{
      */
     public void update(T o);
 
-//    /**
-//     * 保存或更新对象
-//     *
-//     * @param o
-//     */
-//    public void saveOrUpdate(T o);
 
     /**
-     * 查询
+     * 查询集合
      *
      * @param hql
      * @return
      */
-    public List<T> find(String hql);
+    public List<T> find(String hql, Class resultClass);
 
     /**
      * 查询集合
@@ -51,17 +45,25 @@ public interface BaseDao<T>{
      * @param parameters
      * @return
      */
-    public List<T> find(String hql, Map<String,Object> parameters);
+    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass);
 
 //    /**
-//     * 查询集合
+//     * 分页查询
 //     *
 //     * @param hql
-//     * @param param
 //     * @return
 //     */
-//    public List<T> find(String hql, List<Object> param);
+//    public Pager<T> pageList(String hql);
 //
+//    /**
+//     * 分页查询
+//     *
+//     * @param hql
+//     * @param parameters
+//     * @return
+//     */
+//    public Pager<T> pageList(String hql, Map<String,Object> parameters);
+
 //    /**
 //     * 查询集合(带分页)
 //     *
@@ -103,7 +105,7 @@ public interface BaseDao<T>{
      * @param parameters
      * @return Object
      */
-    public T get(String hql, Map<String,Object> parameters);
+    public T get(String hql, Map<String,Object> parameters, Class resultClass);
 //
 //    /**
 //     * 获得一个对象
@@ -113,23 +115,23 @@ public interface BaseDao<T>{
 //     * @return
 //     */
 //    public T get(String hql, List<Object> param);
-//
-//    /**
-//     * select count(*) from 类
-//     *
-//     * @param hql
-//     * @return
-//     */
-//    public Long count(String hql);
-//
-//    /**
-//     * select count(*) from 类
-//     *
-//     * @param hql
-//     * @param param
-//     * @return
-//     */
-//    public Long count(String hql, Object[] param);
+
+    /**
+     * select count(*) from 类
+     *
+     * @param hql
+     * @return
+     */
+    public Long count(String hql);
+
+    /**
+     * select count(*) from 类
+     *
+     * @param hql
+     * @param parameters
+     * @return
+     */
+    public Long count(String hql, Map<String,Object> parameters);
 //
 //    /**
 //     * select count(*) from 类

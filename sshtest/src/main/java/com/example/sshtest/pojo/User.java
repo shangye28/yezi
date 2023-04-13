@@ -41,6 +41,9 @@ public class User {
     @Column(name = "remake")
     private String remake;
 
+    @Column(name = "deptId")
+    private Integer deptId;
+
     public Integer getUserId() {
         return userId;
     }
@@ -119,6 +122,14 @@ public class User {
 
     public void setRemake(String remake) {
         this.remake = remake;
+    }
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
     }
 
     @Override

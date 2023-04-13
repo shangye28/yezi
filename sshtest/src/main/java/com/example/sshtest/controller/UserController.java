@@ -1,11 +1,12 @@
 package com.example.sshtest.controller;
 
+import com.example.sshtest.Service.UserService;
 import com.example.sshtest.dao.UserDao;
-import com.example.sshtest.pojo.Role;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.dto.LoginDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.utils.JWTUtils;
+import com.example.sshtest.utils.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ import java.util.*;
 public class UserController {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserService userService;
 
     /**
      * 登录验证
@@ -26,7 +29,6 @@ public class UserController {
     public R userLogin(@RequestBody LoginDTO loginDTO){
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
-        System.out.println(username+password);
 //        password = MD5Utils.getMD5(password);
         User user= userDao.getByUsername(username);
         if(user.getPassword().equals(password)){ //登录成功
@@ -49,19 +51,70 @@ public class UserController {
      */
     @RequestMapping("/userAll")
     public R findAll(){
-        List<User> list = userDao.findByAll();
-        if(list != null)
-            return R.SUCCESS(list);
+        Pager<User> p = userService.findAll();
+        if(p.getData() != null)
+            return R.SUCCESS(p);
+        else
+            return R.FAIL();
+    }
+    /**
+     * 根据username模糊匹配查找
+     * @return
+     */
+    @RequestMapping("/userName")
+    public R findByUsername(@RequestBody User user){
+        Pager<User> p = userService.findByUsername(user.getUsername());
+        if(p.getData() != null)
+            return R.SUCCESS(p);
+        else
+            return R.FAIL();
+    }
+    /**
+     * 根据nickname模糊匹配查找
+     * @return
+     */
+    @RequestMapping("/userName")
+    public R findByNickname(@RequestBody User user){
+        Pager<User> p = userService.findByNickname(user.getNickname());
+        if(p.getData() != null)
+            return R.SUCCESS(p);
         else
             return R.FAIL();
     }
 
-    @RequestMapping("/userName")
-    public R findByUserName(@RequestBody User user){
-        List<User> list = userDao.findByNickname(user.getNickname());
-        if(list != null)
-            return R.SUCCESS(list);
-        else
+    /**
+     * 删除对象
+     * @param user
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public R deleteUser(@RequestBody User user){
+        if(user.getUserId() != null){
+            userDao.delete(user);
+            return R.SUCCESS();
+        }else
+            return R.FAIL();
+    }
+
+    /**
+     * 更新对象
+     * @param user
+     * @return
+     */
+    @RequestMapping("/updata")
+    public R updataUser(@RequestBody User user){
+        if(user.getUserId() != null){
+            userDao.updata(user);
+            return R.SUCCESS();
+        }else
+            return R.FAIL();
+    }
+    @RequestMapping("/add")
+    public R addUser(@RequestBody User user){
+        if(user.getUsername() != null && user.getPassword() != null){
+            userDao.save(user);
+            return R.SUCCESS();
+        }else
             return R.FAIL();
     }
 //    @RequestMapping("/toRegister")
