@@ -29,142 +29,71 @@ public interface BaseDao<T>{
      */
     public void update(T o);
 
-
     /**
-     * 查询集合
+     * 根据id查询
      *
-     * @param hql
+     * @param id
      * @return
      */
-    public List<T> find(String hql, Class resultClass);
+    public T getById(Integer id);
 
     /**
-     * 查询集合
+     * 查询所有
      *
-     * @param hql
-     * @param parameters
      * @return
      */
-    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass);
+    public List<T> find();
 
+
+    /**
+     * 查询数据条数
+     *
+     * @return
+     */
+    public Long count();
+
+//
+//
 //    /**
-//     * 分页查询
+//     * 查询集合
 //     *
 //     * @param hql
 //     * @return
 //     */
-//    public Pager<T> pageList(String hql);
+//    public List<T> find(String hql, Class resultClass);
 //
 //    /**
-//     * 分页查询
+//     * 查询集合
 //     *
 //     * @param hql
 //     * @param parameters
 //     * @return
 //     */
-//    public Pager<T> pageList(String hql, Map<String,Object> parameters);
-
-//    /**
-//     * 查询集合(带分页)
-//     *
-//     * @param hql
-//     * @param param
-//     * @param page
-//     *            查询第几页
-//     * @param rows
-//     *            每页显示几条记录
-//     * @return
-//     */
-//    public List<T> find(String hql, Object[] param, Integer page, Integer rows);
-//
-//    /**
-//     * 查询集合(带分页)
-//     *
-//     * @param hql
-//     * @param param
-//     * @param page
-//     * @param rows
-//     * @return
-//     */
-//    public List<T> find(String hql, List<Object> param, Integer page, Integer rows);
+//    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass);
 //
 //    /**
 //     * 获得一个对象
 //     *
-//     * @param c
-//     *            对象类型
-//     * @param id
+//     * @param hql
+//     * @param parameters
 //     * @return Object
 //     */
-//    public T get(Class<T> c, Serializable id);
-//
-    /**
-     * 获得一个对象
-     *
-     * @param hql
-     * @param parameters
-     * @return Object
-     */
-    public T get(String hql, Map<String,Object> parameters, Class resultClass);
-//
-//    /**
-//     * 获得一个对象
-//     *
-//     * @param hql
-//     * @param param
-//     * @return
-//     */
-//    public T get(String hql, List<Object> param);
-
-    /**
-     * select count(*) from 类
-     *
-     * @param hql
-     * @return
-     */
-    public Long count(String hql);
-
-    /**
-     * select count(*) from 类
-     *
-     * @param hql
-     * @param parameters
-     * @return
-     */
-    public Long count(String hql, Map<String,Object> parameters);
+//    public T get(String hql, Map<String,Object> parameters, Class resultClass);
 //
 //    /**
 //     * select count(*) from 类
 //     *
 //     * @param hql
-//     * @param param
 //     * @return
 //     */
-//    public Long count(String hql, List<Object> param);
+//    public Long count(String hql);
 //
 //    /**
-//     * 执行HQL语句
+//     * select count(*) from 类
 //     *
 //     * @param hql
-//     * @return 响应数目
-//     */
-//    public Integer executeHql(String hql);
-//
-//    /**
-//     * 执行HQL语句
-//     *
-//     * @param hql
-//     * @param param
-//     * @return 响应数目
-//     */
-//    public Integer executeHql(String hql, Object[] param);
-//
-//    /**
-//     * 执行HQL语句
-//     *
-//     * @param hql
-//     * @param param
+//     * @param parameters
 //     * @return
 //     */
-//    public Integer executeHql(String hql, List<Object> param);
+//    public Long count(String hql, Map<String,Object> parameters);
 }

@@ -1,18 +1,13 @@
 package com.example.sshtest.pojo.dto;
 
-import com.example.sshtest.pojo.Menu;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import java.io.Serializable;
-import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 public class LoginDTO implements Serializable {
     private String username;
     //    @JsonIgnore
@@ -21,4 +16,37 @@ public class LoginDTO implements Serializable {
 //    private List<Menu> menus;
 //    private String rolename;
 //    private String RULpath;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", userToken='" + userToken + '\'' +
+                '}';
+    }
 }
