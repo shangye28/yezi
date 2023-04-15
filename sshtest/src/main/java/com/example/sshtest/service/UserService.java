@@ -2,10 +2,15 @@ package com.example.sshtest.service;
 
 
 import com.example.sshtest.pojo.User;
+import com.example.sshtest.pojo.dto.PageDTO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 
 public interface UserService{
+    public PageDTO<User> findAll();
+    public void delete(Integer userId);
 
     /**
      * 修改密码

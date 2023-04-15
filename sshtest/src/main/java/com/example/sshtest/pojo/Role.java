@@ -2,6 +2,10 @@ package com.example.sshtest.pojo;
 
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static javax.persistence.CascadeType.DETACH;
 
 /**
  * 角色信息
@@ -23,6 +27,11 @@ public class Role {
     private String status;              //角色状态
     @Column(name = "remake")
     private String remake;              //备注
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = DETACH)
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
+//            inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"))
+//    private Set<User> users = new LinkedHashSet<>();
 //    private Long[] MenuIds;             //菜单权限
 
 
@@ -73,6 +82,8 @@ public class Role {
     public void setRemake(String remake) {
         this.remake = remake;
     }
+
+
 
     @Override
     public String toString() {

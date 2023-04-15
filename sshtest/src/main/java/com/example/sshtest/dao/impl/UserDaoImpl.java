@@ -1,9 +1,7 @@
 package com.example.sshtest.dao.impl;
 
-import com.example.sshtest.dao.BaseDao;
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -15,15 +13,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     public List<User> findByUsername(String username) {
         String hql = "from User where username like :username";
         String n = "%" + username + "%";
-        Map<String,Object> m = new HashMap<>();
-        m.put("username",n);
         Query q = this.entityManager.createQuery(hql,User.class);
-        Iterator<Map.Entry<String,Object>> entries = m.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String,Object> entry = entries.next();
-            q.setParameter(entry.getKey(),entry.getValue());
-        }
-
+        q.setParameter("username",n);
         List rows = q.getResultList();
         List<User> resultList=new ArrayList<User>();
         for (Object obj : rows) {
@@ -36,14 +27,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     public User getByUsername(String username) {
         String hql = "from User where username=:username";
-        Map<String,Object> m = new HashMap<>();
-        m.put("username",username);
         Query q = this.entityManager.createQuery(hql,User.class);
-        Iterator<Map.Entry<String,Object>> entries = m.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String,Object> entry = entries.next();
-            q.setParameter(entry.getKey(),entry.getValue());
-        }
+        q.setParameter("username",username);
         List<User> l = q.getResultList();
         if (l != null && l.size() > 0) {
             return l.get(0);

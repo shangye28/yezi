@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/test")
+    @RequestMapping("/test")
     public R test(@RequestBody User user){
         User user1 = userDao.getByUsername(user.getUsername());
         if (user1 != null)
@@ -27,14 +27,9 @@ public class UserController {
             return R.FAIL();
     }
 
-//    @RequiresPermissions("user:view")
-//    @GetMapping
-    @RequestMapping("/view")
+    @GetMapping("/view")
     public R<PageDTO<User>> findAll(){
-        PageDTO<User> p = new PageDTO<>();
-        p.setList(userDao.find());
-        p.setTotal(userDao.count());
-        return R.SUCCESS(p);
+        return R.SUCCESS(userService.findAll());
     }
 
 
@@ -44,6 +39,17 @@ public class UserController {
             return R.SUCCESS();
         else
             return R.FAIL();
+    }
+
+    @DeleteMapping("/delete")
+    public R deleteUser(@RequestBody Integer userId){
+        userService.delete(userId);
+        return R.SUCCESS();
+    }
+
+    @PostMapping("/add")
+    public R addUser(@RequestBody User user){
+        return R.SUCCESS();
     }
 
 

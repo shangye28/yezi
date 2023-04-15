@@ -2,6 +2,8 @@ package com.example.sshtest.pojo;
 
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * 部门信息
@@ -19,8 +21,6 @@ public class Dept {
     @Column(name = "parentId")
     private String parentId;            //父部门ID
 
-    private String parentName;          //父部门名称
-
     @Column(name = "deptSort")
     private String deptSort;            //排序
 
@@ -29,6 +29,11 @@ public class Dept {
 
     @Column(name = "remake")
     private String remake;              //备注
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deptId", orphanRemoval = true)
+    private Set<User> users = new LinkedHashSet<>();
+
+
 //    private List<Dept> children = new ArrayList<>();       //子部门
 
 
@@ -56,14 +61,6 @@ public class Dept {
         this.parentId = parentId;
     }
 
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
     public String getDeptSort() {
         return deptSort;
     }
@@ -88,16 +85,24 @@ public class Dept {
         this.remake = remake;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "Dept{" +
                 "deptId=" + deptId +
                 ", deptName='" + deptName + '\'' +
                 ", parentId='" + parentId + '\'' +
-                ", parentName='" + parentName + '\'' +
                 ", deptSort='" + deptSort + '\'' +
                 ", status='" + status + '\'' +
                 ", remake='" + remake + '\'' +
+                ", users=" + users +
                 '}';
     }
 }

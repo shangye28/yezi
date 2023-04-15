@@ -4,6 +4,7 @@ package com.example.sshtest.service.impl;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
+import com.example.sshtest.pojo.dto.PageDTO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.service.UserService;
 import com.example.sshtest.utils.MD5Utils;
@@ -17,6 +18,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+
+    @Override
+    public PageDTO<User> findAll() {
+        PageDTO<User> p = new PageDTO<>();
+        p.setList(userDao.find());
+        p.setTotal(userDao.count());
+        return p;
+    }
+
+    @Override
+    public void delete(Integer userId) {
+        User user = userDao.getById(userId);
+        userDao.delete(user);
+    }
 
     @Override
     @Transactional

@@ -2,6 +2,11 @@ package com.example.sshtest.pojo;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
 
 /**
  * 用户信息
@@ -36,13 +41,23 @@ public class User {
     private String phone;
 
     @Column(name = "createTime")
-    private String createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "remake")
     private String remake;
 
     @Column(name = "deptId")
     private Integer deptId;
+
+    @ManyToMany(fetch = LAZY, cascade = CascadeType.DETACH)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"))
+    private Set<Role> roles = new LinkedHashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "deptId", insertable = false, updatable = false)
+    private Dept dept;
 
     public Integer getUserId() {
         return userId;
@@ -108,11 +123,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -132,6 +147,25 @@ public class User {
         this.deptId = deptId;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Dept getDept() {
+        Dept dept1 = new Dept();
+        dept1.setDeptId(dept.getDeptId());
+        dept1.setDeptName(dept.getDeptName());
+        return dept1;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -143,8 +177,11 @@ public class User {
                 ", nickname='" + nickname + '\'' +
                 ", status='" + status + '\'' +
                 ", phone='" + phone + '\'' +
-                ", createTime='" + createTime + '\'' +
+                ", createTime=" + createTime +
                 ", remake='" + remake + '\'' +
+                ", deptId=" + deptId +
+                ", roles=" + roles +
+                ", dept=" + dept +
                 '}';
     }
 }
