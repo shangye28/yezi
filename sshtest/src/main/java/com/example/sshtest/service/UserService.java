@@ -4,13 +4,14 @@ package com.example.sshtest.service;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.dto.PageDTO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
-
-import javax.persistence.criteria.CriteriaBuilder;
+import com.example.sshtest.pojo.dto.UserinfoDTO;
 
 
 public interface UserService{
     public PageDTO<User> findAll();
-    public void delete(Integer userId);
+    public boolean delete(Integer userId);
+    public boolean save(User user);
+    public boolean update(UserinfoDTO userinfoDTO);
 
     /**
      * 修改密码

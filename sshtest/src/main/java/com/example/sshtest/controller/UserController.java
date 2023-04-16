@@ -5,6 +5,7 @@ import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.dto.PageDTO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
+import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,29 @@ public class UserController {
 
     @DeleteMapping("/delete")
     public R deleteUser(@RequestBody Integer userId){
-        userService.delete(userId);
-        return R.SUCCESS();
+        if(userService.delete(userId))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+
     }
 
-    @PostMapping("/add")
-    public R addUser(@RequestBody User user){
-        return R.SUCCESS();
+    @PostMapping("/save")
+    public R saveUser(@RequestBody User user){
+        if(userService.save(user))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
     }
+
+    @PutMapping("/updata")
+    public R updataUser(@RequestBody UserinfoDTO userinfoDTO){
+        if(userService.update(userinfoDTO))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
 
 
 

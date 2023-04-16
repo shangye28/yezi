@@ -1,6 +1,8 @@
 package com.example.sshtest.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -19,20 +21,37 @@ public class Role {
 
     @Column(name = "roleName")
     private String roleName;            //角色名
+
     @Column(name = "roleKey")
     private String roleKey;             //角色值
+
     @Column(name = "roleSort")
     private String roleSort;            //排序
+
     @Column(name = "status")
     private String status;              //角色状态
+
     @Column(name = "remake")
     private String remake;              //备注
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = DETACH)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
-//            inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"))
-//    private Set<User> users = new LinkedHashSet<>();
-//    private Long[] MenuIds;             //菜单权限
+
+    /**
+     * user与role多对多映射
+     */
+    @JsonIgnore     //json输出时忽略，防止出现数据死循环
+    @ManyToMany(fetch = FetchType.LAZY, cascade = DETACH)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"))
+    private Set<User> users = new LinkedHashSet<>();
+
+    /**
+     * role与menu多对多映射
+     */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = DETACH)
+    @JoinTable(name = "role_menu",
+            joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "menuId", referencedColumnName = "menuId"))
+    private Set<Menu> menus = new LinkedHashSet<>();
 
 
     public Integer getRoleId() {
@@ -83,7 +102,21 @@ public class Role {
         this.remake = remake;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
 
     @Override
     public String toString() {
@@ -94,6 +127,8 @@ public class Role {
                 ", roleSort='" + roleSort + '\'' +
                 ", status='" + status + '\'' +
                 ", remake='" + remake + '\'' +
+                ", users=" + users +
+                ", menus=" + menus +
                 '}';
     }
 }

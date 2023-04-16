@@ -49,12 +49,18 @@ public class User {
     @Column(name = "deptId")
     private Integer deptId;
 
+    /**
+     * user与role多对多关系映射
+     */
     @ManyToMany(fetch = LAZY, cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"))
     private Set<Role> roles = new LinkedHashSet<>();
 
+    /**
+     * user与dept多对一关系映射
+     */
     @ManyToOne
     @JoinColumn(name = "deptId", insertable = false, updatable = false)
     private Dept dept;
@@ -156,10 +162,14 @@ public class User {
     }
 
     public Dept getDept() {
-        Dept dept1 = new Dept();
-        dept1.setDeptId(dept.getDeptId());
-        dept1.setDeptName(dept.getDeptName());
-        return dept1;
+        if(dept==null)
+            return dept;
+        else {
+            Dept dept1 = new Dept();
+            dept1.setDeptId(dept.getDeptId());
+            dept1.setDeptName(dept.getDeptName());
+            return dept1;
+        }
     }
 
     public void setDept(Dept dept) {

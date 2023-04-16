@@ -6,9 +6,9 @@ import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.dto.PageDTO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
+import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.service.UserService;
 import com.example.sshtest.utils.MD5Utils;
-import jdk.jfr.TransitionFrom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +28,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Integer userId) {
+    public boolean delete(Integer userId) {
         User user = userDao.getById(userId);
-        userDao.delete(user);
+        if(user != null){
+            userDao.delete(user);
+            return true;
+        }else{
+            return false;
+        }
     }
+
+    @Override
+    public boolean save(User user) {
+        if(checkUsernameUnique(user.getUsername()) && checkEmailUnique(user.getEmail()) && checkPhoneUnique(user.getPhone())){
+            userDao.save(user);
+            return true;
+        }else
+            return false;
+    }
+
+
+    @Override
+    public boolean update(UserinfoDTO userinfoDTO) {
+        if(checkEmailUnique(userinfoDTO.getEmail()) && checkPhoneUnique(userinfoDTO.getPhone())){
+            User user = new User();
+            user = userDao.getById(userinfoDTO.getUserId());
+            user.setNickname(userinfoDTO.getNickname());
+            user.setDeptId(userinfoDTO.getDeptId());
+            user.setEmail(userinfoDTO.getEmail());
+            user.setPhone(userinfoDTO.getPhone());
+            user.setRemake(userinfoDTO.getRemake());
+            user.setSex(userinfoDTO.getSex());
+            user.setStatus(userinfoDTO.getStatus());
+            userDao.save(user);
+            return true;
+        }else
+            return false;
+    }
+
 
     @Override
     @Transactional
