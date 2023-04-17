@@ -9,6 +9,8 @@ import com.example.sshtest.pojo.dto.UserinfoDTO;
 
 public interface UserService{
     public PageDTO<User> findAll();
+    public PageDTO<User> findByUsername(String username);
+    public PageDTO<User> findBynickname(String username);
     public boolean delete(Integer userId);
     public boolean save(User user);
     public boolean update(UserinfoDTO userinfoDTO);

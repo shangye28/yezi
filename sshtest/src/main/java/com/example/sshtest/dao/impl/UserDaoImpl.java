@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import java.util.*;
 
-@Repository("UserDao")
+@Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     public List<User> findByUsername(String username) {

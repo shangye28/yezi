@@ -59,8 +59,8 @@ public class UserController {
             return R.FAIL();
     }
 
-    @PutMapping("/updata")
-    public R updataUser(@RequestBody UserinfoDTO userinfoDTO){
+    @PutMapping("/update")
+    public R updateUser(@RequestBody UserinfoDTO userinfoDTO){
         if(userService.update(userinfoDTO))
             return R.SUCCESS();
         else

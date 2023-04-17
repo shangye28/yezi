@@ -28,6 +28,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public PageDTO<User> findByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public PageDTO<User> findBynickname(String username) {
+        return null;
+    }
+
+
+    @Override
     public boolean delete(Integer userId) {
         User user = userDao.getById(userId);
         if(user != null){
