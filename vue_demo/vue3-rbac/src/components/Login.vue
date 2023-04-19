@@ -1,22 +1,29 @@
 <template>
-    <div class="login">
-        <el-card class="box-card">
-            <div slot="header" class="clearfix">
-                <span>RBAC后台管理系统</span>
-            </div>
-            <el-form label-width="80px" :model="form" ref="form" :rules="rules">
-                <el-form-item label="用户名" prop="username">
-                    <el-input placeholder="请输入用户名" v-model="form.username"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input placeholder="请输入密码" type="password" v-model="form.password"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="login('form')">登录</el-button>
-                </el-form-item>
-            </el-form>
-        </el-card>
-    </div>
+  <div class="login-body">
+    <el-card class="box-card">
+      <div class="clearfix">
+        <span>RBAC后台管理系统</span>
+      </div>
+      <el-form label-width="80px" :model="form" ref="form" :rules="rules">
+        <el-form-item label="用户名" prop="username">
+          <el-input
+            placeholder="请输入用户名"
+            v-model="form.username"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input
+            placeholder="请输入密码"
+            type="password"
+            v-model="form.password"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="login('form')">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -81,35 +88,33 @@ export default {
 </script>
 
 <style lang="scss">
-.login {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: url('../assets/11.jpg') center no-repeat fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.login-body {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-size: cover;
+  background-image: url(../assets/11.jpg);
 
-    .el-card {
-        background: #65768557;
+  .el-card {
+    background: #65768557;
+  }
+
+  .box-card {
+    width: 450px;
+    margin: 200px auto;
+    color: #fff;
+
+    .el-button .el-form-item__label {
+      color: #fff;
     }
 
-    .box-card {
-        width: 450px;
-        margin: 200px auto;
-        color: #fff;
-
-        .el-button .el-form-item__label {
-            color: #fff;
-        }
-
-        .el-card__header {
-            font-size: 34px;
-        }
-
-        .el-button {
-            width: 100%;
-        }
+    .clearfix {
+      font-size: 34px;
     }
-}</style>
+
+    .el-button {
+      width: 100%;
+    }
+  }
+}
+</style>
