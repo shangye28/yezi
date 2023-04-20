@@ -41,6 +41,14 @@ public class UserServiceImpl implements UserService {
         return p;
     }
 
+    @Override
+    public PageVO<User> findByDeptName(String deptName) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByDeptName(deptName));
+        p.setTotal(userDao.countByDeptName(deptName));
+        return p;
+    }
+
 
     @Override
     @Transactional

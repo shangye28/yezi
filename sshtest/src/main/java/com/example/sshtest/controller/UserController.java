@@ -8,6 +8,7 @@ import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -28,8 +29,13 @@ public class UserController {
     }
 
     @GetMapping("/findByNickname")
-    public R<PageVO<User>> ByNickname(@RequestBody User user){
+    public R<PageVO<User>> findByNickname(@RequestBody User user){
         return R.SUCCESS(userService.findByNickname(user.getNickname()));
+    }
+
+    @GetMapping("/findByDeptName")
+    public R<PageVO<User>> findByDept(@Param("deptName") String deptName){
+        return R.SUCCESS(userService.findByDeptName(deptName));
     }
 
 

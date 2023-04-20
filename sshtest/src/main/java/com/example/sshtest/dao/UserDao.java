@@ -11,9 +11,13 @@ public interface UserDao extends BaseDao<User> {
 
     public List<User> findByNickname(String nickname);
 
+    public List<User> findByDeptName(String deptName);
+
     public Long countByUsername(String username);
 
     public Long countByNickname(String nickname);
+
+    public Long countByDeptName(String deptName);
 
     public User getByUsername(String username);
 //    /**

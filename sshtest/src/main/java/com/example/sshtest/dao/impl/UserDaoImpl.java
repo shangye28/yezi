@@ -40,6 +40,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public List<User> findByDeptName(String deptName) {
+        String hql = "select user.* from user left join dept on user.deptId=dept.deptId where dept.deptName=:deptName";
+        Query q = this.entityManager.createQuery(hql);
+        q.setParameter("deptName",deptName);
+        List rows = q.getResultList();
+        List<User> resultList=new ArrayList<User>();
+        for (Object obj : rows) {
+            User row=(User)obj;
+            resultList.add(row);
+        }
+        return resultList;
+    }
+
+    @Override
     public Long countByUsername(String username) {
         String hql = "select count(*) from User where username like :username";
         String n = "%" + username + "%";
@@ -55,6 +69,15 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         String n = "%" + nickname + "%";
         Query q = this.entityManager.createQuery(hql);
         q.setParameter("nickname",n);
+        Long total = (Long) q.getSingleResult();
+        return total;
+    }
+
+    @Override
+    public Long countByDeptName(String deptName) {
+        String hql = "select count(*) from user left join dept on user.deptId=dept.deptId where dept.deptName=:deptName";
+        Query q = this.entityManager.createQuery(hql);
+        q.setParameter("deptName",deptName);
         Long total = (Long) q.getSingleResult();
         return total;
     }

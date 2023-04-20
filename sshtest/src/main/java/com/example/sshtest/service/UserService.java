@@ -11,6 +11,7 @@ public interface UserService{
     public PageVO<User> findAll();
     public PageVO<User> findByUsername(String username);
     public PageVO<User> findByNickname(String username);
+    public PageVO<User> findByDeptName(String deptName);
     public boolean delete(Integer userId);
     public boolean save(User user);
     public boolean update(UserinfoDTO userinfoDTO);
