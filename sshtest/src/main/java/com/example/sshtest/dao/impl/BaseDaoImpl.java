@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-@Repository("BaseDAO")
+@Repository("BaseDao")
 @SuppressWarnings("all")
 public class BaseDaoImpl<T> implements BaseDao<T> {
 

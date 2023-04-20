@@ -3,13 +3,16 @@ package com.example.sshtest.controller;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
-import com.example.sshtest.pojo.dto.PageDTO;
+import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -21,16 +24,27 @@ public class UserController {
 
     @RequestMapping("/test")
     public R test(@RequestBody User user){
-        User user1 = userDao.getByUsername(user.getUsername());
-        if (user1 != null)
-            return R.SUCCESS(user1);
+//        User user1 = userDao.getByUsername(user.getUsername());
+        List<User> list = userDao.findByUsername("o");
+        if (list != null)
+            return R.SUCCESS(list);
         else
             return R.FAIL();
     }
 
     @GetMapping("/view")
-    public R<PageDTO<User>> findAll(){
+    public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
+    }
+
+    @GetMapping("/viewByUsername")
+    public R<PageVO<User>> findByUsername(@RequestBody User user){
+        return R.SUCCESS(userService.findByUsername(user.getUsername()));
+    }
+
+    @GetMapping("/viewByNickname")
+    public R<PageVO<User>> ByNickname(@RequestBody User user){
+        return R.SUCCESS(userService.findByNickname(user.getNickname()));
     }
 
 
@@ -43,8 +57,8 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public R deleteUser(@RequestBody Integer userId){
-        if(userService.delete(userId))
+    public R deleteUser(@RequestBody User user){
+        if(userService.delete(user.getUserId()))
             return R.SUCCESS();
         else
             return R.FAIL();

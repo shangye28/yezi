@@ -4,7 +4,7 @@ package com.example.sshtest.service.impl;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
-import com.example.sshtest.pojo.dto.PageDTO;
+import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.service.UserService;
@@ -17,28 +17,33 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-
-
     @Override
-    public PageDTO<User> findAll() {
-        PageDTO<User> p = new PageDTO<>();
+    public PageVO<User> findAll() {
+        PageVO<User> p = new PageVO<>();
         p.setList(userDao.find());
         p.setTotal(userDao.count());
         return p;
     }
 
     @Override
-    public PageDTO<User> findByUsername(String username) {
-        return null;
+    public PageVO<User> findByUsername(String username) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByUsername(username));
+        p.setTotal(userDao.countByUsername(username));
+        return p;
     }
 
     @Override
-    public PageDTO<User> findBynickname(String username) {
-        return null;
+    public PageVO<User> findByNickname(String nickname) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByNickname(nickname));
+        p.setTotal(userDao.countByNickname(nickname));
+        return p;
     }
 
 
     @Override
+    @Transactional
     public boolean delete(Integer userId) {
         User user = userDao.getById(userId);
         if(user != null){
@@ -50,8 +55,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean save(User user) {
-        if(checkUsernameUnique(user.getUsername()) && checkEmailUnique(user.getEmail()) && checkPhoneUnique(user.getPhone())){
+        if(checkUsernameUnique(user.getUsername()) ){
+            System.out.println(user.toString());
             userDao.save(user);
             return true;
         }else
@@ -60,8 +67,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public boolean update(UserinfoDTO userinfoDTO) {
-        if(checkEmailUnique(userinfoDTO.getEmail()) && checkPhoneUnique(userinfoDTO.getPhone())){
+        if(userDao.getByUsername(userinfoDTO.getUsername()) != null){
+            System.out.println(userinfoDTO.toString());
             User user = new User();
             user = userDao.getById(userinfoDTO.getUserId());
             user.setNickname(userinfoDTO.getNickname());
@@ -98,23 +107,5 @@ public class UserServiceImpl implements UserService {
             return true;
         else
             return false;
-    }
-
-    @Override
-    public boolean checkEmailUnique(String email) {
-//        if(userDao.getByEmail(email) == null)
-//            return true;
-//        else
-//            return false;
-        return false;
-    }
-
-    @Override
-    public boolean checkPhoneUnique(String phone) {
-//        if(userDao.getByPhone(phone) == null)
-//            return true;
-//        else
-//            return false;
-        return false;
     }
 }

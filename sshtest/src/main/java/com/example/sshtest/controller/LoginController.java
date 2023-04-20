@@ -9,6 +9,7 @@ import com.example.sshtest.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class LoginController {
      * @param loginDTO
      * @return
      */
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public R userLogin(@RequestBody LoginDTO loginDTO){
         String username = loginDTO.getUsername();
         String p = loginDTO.getPassword();

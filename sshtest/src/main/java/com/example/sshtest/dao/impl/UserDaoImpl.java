@@ -25,6 +25,41 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public List<User> findByNickname(String nickname) {
+        String hql = "from User where nickname like :nickname";
+        String n = "%" + nickname + "%";
+        Query q = this.entityManager.createQuery(hql,User.class);
+        q.setParameter("nickname",n);
+        List rows = q.getResultList();
+        List<User> resultList=new ArrayList<User>();
+        for (Object obj : rows) {
+            User row=(User)obj;
+            resultList.add(row);
+        }
+        return resultList;
+    }
+
+    @Override
+    public Long countByUsername(String username) {
+        String hql = "select count(*) from User where username like :username";
+        String n = "%" + username + "%";
+        Query q = this.entityManager.createQuery(hql);
+        q.setParameter("username",n);
+        Long total = (Long) q.getSingleResult();
+        return total;
+    }
+
+    @Override
+    public Long countByNickname(String nickname) {
+        String hql = "select count(*) from User where nickname like :nickname";
+        String n = "%" + nickname + "%";
+        Query q = this.entityManager.createQuery(hql);
+        q.setParameter("nickname",n);
+        Long total = (Long) q.getSingleResult();
+        return total;
+    }
+
+    @Override
     public User getByUsername(String username) {
         String hql = "from User where username=:username";
         Query q = this.entityManager.createQuery(hql,User.class);

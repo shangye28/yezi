@@ -1,8 +1,8 @@
 package com.example.sshtest.service;
 
 import com.example.sshtest.pojo.Dept;
-import com.example.sshtest.pojo.dto.PageDTO;
+import com.example.sshtest.pojo.vo.PageVO;
 
 public interface DeptService {
-    public PageDTO<Dept> findAll();
+    public PageVO<Dept> findAll();
 }

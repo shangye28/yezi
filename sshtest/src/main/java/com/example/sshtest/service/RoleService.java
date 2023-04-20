@@ -1,9 +1,9 @@
 package com.example.sshtest.service;
 
 import com.example.sshtest.pojo.Role;
-import com.example.sshtest.pojo.dto.PageDTO;
+import com.example.sshtest.pojo.vo.PageVO;
 
 
 public interface RoleService {
-    public PageDTO<Role> findAll();
+    public PageVO<Role> findAll();
 }

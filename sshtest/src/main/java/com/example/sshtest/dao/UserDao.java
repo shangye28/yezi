@@ -9,6 +9,12 @@ public interface UserDao extends BaseDao<User> {
 
     public List<User> findByUsername(String username);
 
+    public List<User> findByNickname(String nickname);
+
+    public Long countByUsername(String username);
+
+    public Long countByNickname(String nickname);
+
     public User getByUsername(String username);
 //    /**
 //     * 查询所有

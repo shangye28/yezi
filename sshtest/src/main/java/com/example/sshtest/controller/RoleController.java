@@ -3,7 +3,7 @@ package com.example.sshtest.controller;
 
 import com.example.sshtest.dao.RoleDao;
 import com.example.sshtest.pojo.Role;
-import com.example.sshtest.pojo.dto.PageDTO;
+import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class RoleController {
 //    }
 
     @GetMapping("/view")
-    public R<PageDTO<Role>> findAll(){
+    public R<PageVO<Role>> findAll(){
         return R.SUCCESS(roleService.findAll());
     }
 
