@@ -1,7 +1,6 @@
 package com.example.sshtest.controller;
 
 
-import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
@@ -9,40 +8,26 @@ import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserDao userDao;
-    @Autowired
     private UserService userService;
-
-    @RequestMapping("/test")
-    public R test(@RequestBody User user){
-//        User user1 = userDao.getByUsername(user.getUsername());
-        List<User> list = userDao.findByUsername("o");
-        if (list != null)
-            return R.SUCCESS(list);
-        else
-            return R.FAIL();
-    }
 
     @GetMapping("/view")
     public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
     }
 
-    @GetMapping("/viewByUsername")
+    @GetMapping("/findByUsername")
     public R<PageVO<User>> findByUsername(@RequestBody User user){
         return R.SUCCESS(userService.findByUsername(user.getUsername()));
     }
 
-    @GetMapping("/viewByNickname")
+    @GetMapping("/findByNickname")
     public R<PageVO<User>> ByNickname(@RequestBody User user){
         return R.SUCCESS(userService.findByNickname(user.getNickname()));
     }

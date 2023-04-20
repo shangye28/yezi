@@ -3,7 +3,7 @@ package com.example.sshtest.pojo.vo;
 import java.util.List;
 
 /**
- * 后端分页
+ * 前端分页
  * @param <T>
  */
 public class PageVO<T> {

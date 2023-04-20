@@ -2,6 +2,11 @@ package com.example.sshtest.pojo.vo;
 
 import java.util.List;
 
+
+/**
+ *  后端分页
+ * @param <T>
+ */
 public class Pager<T> {
     private int pageSize; // 每页显示多少条记录
 

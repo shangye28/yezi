@@ -24,7 +24,7 @@ public class JWTUtils {
         Algorithm alg = Algorithm.HMAC256(SIG); //自定义签名密钥
         Calendar ins = Calendar.getInstance();
         ins.add(Calendar.DATE,1); //默认过期时间为1天
-//        ins.add(Calendar.MINUTE,15); //默认过期时间为15分z钟
+//        ins.add(Calendar.MINUTE,15); //默认过期时间为15分钟
 //        ins.add(Calendar.SECOND,30);
         //jwt builder
         JWTCreator.Builder builder = JWT.create();
