@@ -14,16 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
     @Autowired
     private UserDao userDao;
-    @Override
-    public PageVO<User> findAll() {
-        PageVO<User> p = new PageVO<>();
-        p.setList(userDao.find());
-        p.setTotal(userDao.count());
-        return p;
-    }
 
     @Override
     public PageVO<User> findByUsername(String username) {
@@ -66,7 +59,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean save(User user) {
         if(checkUsernameUnique(user.getUsername()) ){
-            System.out.println(user.toString());
             userDao.save(user);
             return true;
         }else
@@ -76,19 +68,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean update(UserinfoDTO userinfoDTO) {
-        if(userDao.getByUsername(userinfoDTO.getUsername()) != null){
-            System.out.println(userinfoDTO.toString());
-            User user = new User();
-            user = userDao.getById(userinfoDTO.getUserId());
-            user.setNickname(userinfoDTO.getNickname());
-            user.setDeptId(userinfoDTO.getDeptId());
-            user.setEmail(userinfoDTO.getEmail());
-            user.setPhone(userinfoDTO.getPhone());
-            user.setRemake(userinfoDTO.getRemake());
-            user.setSex(userinfoDTO.getSex());
-            user.setStatus(userinfoDTO.getStatus());
-            userDao.save(user);
+    public boolean update(User user) {
+        if(userDao.getByUsername(user.getUsername()) != null){
+            userDao.update(user);
             return true;
         }else
             return false;

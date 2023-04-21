@@ -37,6 +37,9 @@ public class Menu {
     @Column(name = "permission")
     private String permission;          //权限标识
 
+    @Column(name = "url")
+    private String url;
+
     @Column(name = "icon")
     private String icon;                //菜单图标
 
@@ -153,6 +156,14 @@ public class Menu {
         this.menus = menus;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -171,9 +182,10 @@ public class Menu {
                 ", menuType='" + menuType + '\'' +
                 ", status='" + status + '\'' +
                 ", permission='" + permission + '\'' +
+                ", url='" + url + '\'' +
                 ", icon='" + icon + '\'' +
                 ", parent=" + parent +
-                ", users=" + menus +
+                ", menus=" + menus +
                 ", roles=" + roles +
                 '}';
     }

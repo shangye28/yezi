@@ -2,55 +2,37 @@ package com.example.sshtest.dao.impl;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
+import com.example.sshtest.utils.CRUDUtils;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.Query;
 import java.util.*;
 
 @Repository
-public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     @Override
     public List<User> findByUsername(String username) {
+        CRUDUtils<User> crudUtils = new CRUDUtils<>();
         String hql = "from User where username like :username";
         String n = "%" + username + "%";
-        Query q = this.entityManager.createQuery(hql,User.class);
-        q.setParameter("username",n);
-        List rows = q.getResultList();
-        List<User> resultList=new ArrayList<User>();
-        for (Object obj : rows) {
-            User row=(User)obj;
-            resultList.add(row);
-        }
-        return resultList;
+        Query query = this.entityManager.createQuery(hql,User.class);
+        return crudUtils.find(query,"username", n);
     }
 
     @Override
     public List<User> findByNickname(String nickname) {
+        CRUDUtils<User> crudUtils = new CRUDUtils<>();
         String hql = "from User where nickname like :nickname";
         String n = "%" + nickname + "%";
-        Query q = this.entityManager.createQuery(hql,User.class);
-        q.setParameter("nickname",n);
-        List rows = q.getResultList();
-        List<User> resultList=new ArrayList<User>();
-        for (Object obj : rows) {
-            User row=(User)obj;
-            resultList.add(row);
-        }
-        return resultList;
+        Query query = this.entityManager.createQuery(hql, User.class);
+        return crudUtils.find(query,"nickname", n);
     }
 
     @Override
     public List<User> findByDeptName(String deptName) {
-        String hql = "select user.* from user left join dept on user.deptId=dept.deptId where dept.deptName=:deptName";
-        Query q = this.entityManager.createQuery(hql);
-        q.setParameter("deptName",deptName);
-        List rows = q.getResultList();
-        List<User> resultList=new ArrayList<User>();
-        for (Object obj : rows) {
-            User row=(User)obj;
-            resultList.add(row);
-        }
-        return resultList;
+        CRUDUtils<User> crudUtils = new CRUDUtils<>();
+        String hql = "from User left join Dept on User.dept_id=Dept.dept_id where Dept.dept_name=:deptName";
+        Query query = this.entityManager.createQuery(hql, User.class);
+        return crudUtils.find(query, "deptName", deptName);
     }
 
     @Override
@@ -84,15 +66,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public User getByUsername(String username) {
+        CRUDUtils<User> crudUtils = new CRUDUtils<>();
         String hql = "from User where username=:username";
         Query q = this.entityManager.createQuery(hql,User.class);
-        q.setParameter("username",username);
-        List<User> l = q.getResultList();
-        if (l != null && l.size() > 0) {
-            return l.get(0);
-        } else {
-            return null;
-        }
+        return crudUtils.get(q, "username", username);
     }
 
 

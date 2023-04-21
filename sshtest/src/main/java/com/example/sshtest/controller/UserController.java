@@ -1,14 +1,14 @@
 package com.example.sshtest.controller;
 
 
+import com.example.sshtest.pojo.Dept;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
-import com.example.sshtest.pojo.dto.UserinfoDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequiresPermissions("user:view")
     @GetMapping("/view")
     public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
@@ -34,8 +35,8 @@ public class UserController {
     }
 
     @GetMapping("/findByDeptName")
-    public R<PageVO<User>> findByDept(@Param("deptName") String deptName){
-        return R.SUCCESS(userService.findByDeptName(deptName));
+    public R<PageVO<User>> findByDept(@RequestBody Dept dept){
+        return R.SUCCESS(userService.findByDeptName(dept.getDeptName()));
     }
 
 
@@ -55,7 +56,7 @@ public class UserController {
             return R.FAIL();
 
     }
-
+//    @RequiresPermissions("user:delete")
     @PostMapping("/save")
     public R saveUser(@RequestBody User user){
         if(userService.save(user))
@@ -65,8 +66,8 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public R updateUser(@RequestBody UserinfoDTO userinfoDTO){
-        if(userService.update(userinfoDTO))
+    public R updateUser(@RequestBody User user){
+        if(userService.update(user))
             return R.SUCCESS();
         else
             return R.FAIL();

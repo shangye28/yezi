@@ -6,15 +6,16 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.pojo.dto.UserinfoDTO;
 
+import java.util.List;
 
-public interface UserService{
-    public PageVO<User> findAll();
+
+public interface UserService extends BaseService<User>{
     public PageVO<User> findByUsername(String username);
     public PageVO<User> findByNickname(String username);
     public PageVO<User> findByDeptName(String deptName);
     public boolean delete(Integer userId);
     public boolean save(User user);
-    public boolean update(UserinfoDTO userinfoDTO);
+    public boolean update(User user);
 
     /**
      * 修改密码

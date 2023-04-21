@@ -8,15 +8,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DeptServiceImpl implements DeptService {
-    @Autowired
-    private DeptDao deptDao;
-
-    @Override
-    public PageVO<Dept> findAll() {
-        PageVO<Dept> p = new PageVO<>();
-        p.setList(deptDao.find());
-        p.setTotal(deptDao.count());
-        return p;
-    }
+public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptService {
 }

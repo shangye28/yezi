@@ -7,9 +7,7 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/role")
@@ -21,8 +19,8 @@ public class RoleController {
     private RoleService roleService;
 
 //    @RequestMapping("/test")
-//    public R test(@RequestBody User user){
-//        User user1 = userDao.getByUsername(user.getUsername());
+//    public R test(@RequestBody Role role){
+//        Role user1 = roleService);
 //        if (user1 != null)
 //            return R.SUCCESS(user1);
 //        else
@@ -32,6 +30,35 @@ public class RoleController {
     @GetMapping("/view")
     public R<PageVO<Role>> findAll(){
         return R.SUCCESS(roleService.findAll());
+    }
+
+    @GetMapping("/findByRoleName")
+    public R<PageVO<Role>> findByRoleName(@RequestBody Role role){
+        return R.SUCCESS(roleService.findByRoleName(role.getRoleName()));
+    }
+
+    @DeleteMapping("/delete")
+    public R deleteUser(@RequestBody Role role){
+        if(roleService.delete(role.getRoleId()))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PostMapping("/save")
+    public R saveUser(@RequestBody Role role){
+        if(roleService.save(role))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PutMapping("/update")
+    public R updateUser(@RequestBody Role role){
+        if(roleService.update(role))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
     }
 
 }

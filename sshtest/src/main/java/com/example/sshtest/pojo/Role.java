@@ -4,7 +4,9 @@ package com.example.sshtest.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.DETACH;
@@ -51,7 +53,7 @@ public class Role {
     @JoinTable(name = "role_menu",
             joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
             inverseJoinColumns = @JoinColumn(name = "menuId", referencedColumnName = "menuId"))
-    private Set<Menu> menus = new LinkedHashSet<>();
+    private List<Menu> menus = new ArrayList<>();
 
 
     public Integer getRoleId() {
@@ -110,11 +112,11 @@ public class Role {
         this.users = users;
     }
 
-    public Set<Menu> getMenus() {
+    public List<Menu> getMenus() {
         return menus;
     }
 
-    public void setMenus(Set<Menu> menus) {
+    public void setMenus(List<Menu> menus) {
         this.menus = menus;
     }
 
