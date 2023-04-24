@@ -7,8 +7,8 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,8 +18,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequiresPermissions("user:view")
     @GetMapping("/view")
+    @PreAuthorize(value = "hasAuthority('user:view')")
     public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
     }

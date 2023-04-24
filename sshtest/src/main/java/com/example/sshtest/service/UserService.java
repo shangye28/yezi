@@ -2,14 +2,20 @@ package com.example.sshtest.service;
 
 
 import com.example.sshtest.pojo.User;
+import com.example.sshtest.pojo.dto.LoginDTO;
 import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.pojo.dto.UserinfoDTO;
+import com.example.sshtest.result.R;
 
 import java.util.List;
 
 
 public interface UserService extends BaseService<User>{
+    public R login(LoginDTO loginDTO);
+
+    public R loginOut();
+
     public PageVO<User> findByUsername(String username);
     public PageVO<User> findByNickname(String username);
     public PageVO<User> findByDeptName(String deptName);
