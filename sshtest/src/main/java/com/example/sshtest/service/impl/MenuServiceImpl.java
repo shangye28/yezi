@@ -9,4 +9,47 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuService {
+    @Autowired
+    private MenuDao menuDao;
+    @Override
+    public PageVO<Menu> findByMenuName(String menuName) {
+        PageVO<Menu> p = new PageVO<>();
+        p.setList(menuDao.findByMenuName(menuName));
+        p.setTotal(menuDao.countByMenuName(menuName));
+        return p;
+    }
+
+    @Override
+    public boolean delete(Integer menuId) {
+        Menu role = menuDao.getById(menuId);
+        if(role != null){
+            menuDao.delete(role);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean save(Menu menu) {
+        if(checkMenuNameUnique(menu.getMenuName()) ){
+            menuDao.save(menu);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean update(Menu menu) {
+        if(menuDao.getByMenuName(menu.getMenuName()) != null){
+            menuDao.update(menu);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean checkMenuNameUnique(String menuName) {
+        return false;
+    }
 }

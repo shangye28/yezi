@@ -6,9 +6,7 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/dept")
@@ -18,17 +16,37 @@ public class DeptController {
     @Autowired
     private DeptService deptService;
 
-//    @RequestMapping("/test")
-//    public R test(@RequestBody User user){
-//        User user1 = userDao.getByUsername(user.getUsername());
-//        if (user1 != null)
-//            return R.SUCCESS(user1);
-//        else
-//            return R.FAIL();
-//    }
-
     @GetMapping("/view")
     public R<PageVO<Dept>> findAll(){
         return R.SUCCESS(deptService.findAll());
+    }
+
+    @GetMapping("/findByMenuName")
+    public R<PageVO<Dept>> findByDeptName(@RequestBody Dept Dept){
+        return R.SUCCESS(deptService.findByDeptName(Dept.getDeptName()));
+    }
+
+    @DeleteMapping("/delete")
+    public R deleteDept(@RequestBody Dept dept){
+        if(deptService.delete(dept.getDeptId()))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PostMapping("/save")
+    public R saveDept(@RequestBody Dept dept){
+        if(deptService.save(dept))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PutMapping("/update")
+    public R updateDept(@RequestBody Dept dept){
+        if(deptService.update(dept))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
     }
 }

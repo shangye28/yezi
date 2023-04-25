@@ -1,6 +1,7 @@
 package com.example.sshtest.controller;
 
 
+import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.Dept;
 import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.vo.PageVO;
@@ -8,8 +9,10 @@ import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -17,16 +20,20 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping("/view")
-    @PreAuthorize(value = "hasAuthority('user:view')")
+//    @PreAuthorize(value = "hasAuthority('user:view')")
     public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
     }
 
+
+
     @GetMapping("/findByUsername")
-    public R<PageVO<User>> findByUsername(@RequestBody User user){
-        return R.SUCCESS(userService.findByUsername(user.getUsername()));
+    public R<PageVO<User>> findByUsername(String username){
+        return R.SUCCESS(userService.findByUsername(username));
     }
 
     @GetMapping("/findByNickname")
@@ -40,13 +47,13 @@ public class UserController {
     }
 
 
-    @RequestMapping("/resetPwd")
-    public R resetPwd(@RequestBody PasswordDTO pd){
-        if(userService.resetPassword(pd))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
-    }
+//    @RequestMapping("/resetPwd")
+//    public R resetPwd(@RequestBody PasswordDTO pd){
+//        if(userService.resetPassword(pd))
+//            return R.SUCCESS();
+//        else
+//            return R.FAIL();
+//    }
 
     @DeleteMapping("/delete")
     public R deleteUser(@RequestBody User user){

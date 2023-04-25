@@ -186,7 +186,6 @@ public class Menu {
                 ", icon='" + icon + '\'' +
                 ", parent=" + parent +
                 ", menus=" + menus +
-                ", roles=" + roles +
                 '}';
     }
 }

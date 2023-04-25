@@ -32,8 +32,8 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao {
     }
 
     @Override
-    public User getByRoleName(String roleName) {
-        CRUDUtils<User> crudUtils = new CRUDUtils<>();
+    public Role getByRoleName(String roleName) {
+        CRUDUtils<Role> crudUtils = new CRUDUtils<>();
         String hql = "from Role where role_name=:roleName";
         Query q = this.entityManager.createQuery(hql,Role.class);
         return crudUtils.get(q, "roleName", roleName);

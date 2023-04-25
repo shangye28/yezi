@@ -38,7 +38,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/delete")
-    public R deleteUser(@RequestBody Role role){
+    public R deleteRole(@RequestBody Role role){
         if(roleService.delete(role.getRoleId()))
             return R.SUCCESS();
         else
@@ -46,7 +46,7 @@ public class RoleController {
     }
 
     @PostMapping("/save")
-    public R saveUser(@RequestBody Role role){
+    public R saveRole(@RequestBody Role role){
         if(roleService.save(role))
             return R.SUCCESS();
         else
@@ -54,7 +54,7 @@ public class RoleController {
     }
 
     @PutMapping("/update")
-    public R updateUser(@RequestBody Role role){
+    public R updateRole(@RequestBody Role role){
         if(roleService.update(role))
             return R.SUCCESS();
         else

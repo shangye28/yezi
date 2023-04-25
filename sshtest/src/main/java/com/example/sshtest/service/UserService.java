@@ -12,9 +12,9 @@ import java.util.List;
 
 
 public interface UserService extends BaseService<User>{
-    public R login(LoginDTO loginDTO);
-
-    public R loginOut();
+//    public R login(LoginDTO loginDTO);
+//
+//    public R loginOut();
 
     public PageVO<User> findByUsername(String username);
     public PageVO<User> findByNickname(String username);
@@ -28,7 +28,7 @@ public interface UserService extends BaseService<User>{
      *
      * @param pd
      */
-    public boolean resetPassword(PasswordDTO pd);
+//    public boolean resetPassword(PasswordDTO pd);
 
     /**
      * 检验用户名是否唯一

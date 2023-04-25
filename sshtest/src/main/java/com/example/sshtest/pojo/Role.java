@@ -129,7 +129,6 @@ public class Role {
                 ", roleSort='" + roleSort + '\'' +
                 ", status='" + status + '\'' +
                 ", remake='" + remake + '\'' +
-                ", users=" + users +
                 ", menus=" + menus +
                 '}';
     }

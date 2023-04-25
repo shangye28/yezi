@@ -10,5 +10,5 @@ public interface RoleDao extends BaseDao<Role>{
 
     public Long countByRoleName(String roleName);
 
-    public User getByRoleName(String roleName);
+    public Role getByRoleName(String roleName);
 }

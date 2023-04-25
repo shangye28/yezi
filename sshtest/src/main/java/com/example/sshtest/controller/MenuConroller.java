@@ -6,9 +6,7 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/menu")
@@ -19,18 +17,38 @@ public class MenuConroller {
     @Autowired
     private MenuService menuService;
 
-//    @RequestMapping("/test")
-//    public R test(@RequestBody User user){
-//        User user1 = userDao.getByUsername(user.getUsername());
-//        if (user1 != null)
-//            return R.SUCCESS(user1);
-//        else
-//            return R.FAIL();
-//    }
 
     @GetMapping("/view")
     public R<PageVO<Menu>> findAll(){
         return R.SUCCESS(menuService.findAll());
     }
 
+    @GetMapping("/findByMenuName")
+    public R<PageVO<Menu>> findByRoleName(@RequestBody Menu menu){
+        return R.SUCCESS(menuService.findByMenuName(menu.getMenuName()));
+    }
+
+    @DeleteMapping("/delete")
+    public R deleteMenu(@RequestBody Menu menu){
+        if(menuService.delete(menu.getMenuId()))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PostMapping("/save")
+    public R saveMenu(@RequestBody Menu menu){
+        if(menuService.save(menu))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
+
+    @PutMapping("/update")
+    public R updateMenu(@RequestBody Menu menu){
+        if(menuService.update(menu))
+            return R.SUCCESS();
+        else
+            return R.FAIL();
+    }
 }
