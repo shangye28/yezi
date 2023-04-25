@@ -3,6 +3,7 @@ const routes = [
     {
         name: 'Login',
         path: '/login',
+        hidden: true,
         component: () => import('@/components/Login.vue'),
     },
     {
@@ -14,12 +15,14 @@ const routes = [
     {
         path: '/home',
         name: 'Dashboard',
+        // inconClass: '',
         redirect: '/home/analysisi',
         component: () => import('@/components/Home.vue'),
         children: [
             {
                 path: '/home/analysisi',
                 name: '分析页',
+                // inconClass: 'Shop',
                 component: () => import('@/components/dashboard/Analysis.vue')
             },
             {
@@ -32,7 +35,7 @@ const routes = [
     {
         path: '/home',
         name: '系统管理',
-        iconClass: 'fa fa-assistive-listening-systems',
+        // iconClass: 'fal fa-city',
         component: () => import('@/components/Home.vue'),
         children: [
             {

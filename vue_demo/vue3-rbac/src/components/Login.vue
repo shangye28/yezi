@@ -63,7 +63,7 @@ export default {
                     login(this.form).then(res => {
                         if (res.data.statusCode === 200) {
                             setToken('username', res.data.data.username)
-                            setToken('token', res.data.data.userToken)
+                            setToken('userToken', res.data.data.userToken)
                             this.$message({ message: res.data.statusMessage, type: 'success' })
                             this.$router.push('home')
                         }

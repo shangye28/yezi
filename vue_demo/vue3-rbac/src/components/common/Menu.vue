@@ -4,15 +4,15 @@
             <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
                 background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
                 <template v-for="(item, index) in menus">
-                    <el-submenu :index="index + ''" :key="index" v-if="!item.hidden">
-                        <template slot="title">
-                            <i :class="item.iconClass"></i>
+                    <el-sub-menu :index="index + ''" :key="index" v-if="!item.hidden">
+                        <template v-slot:title>
+                            <!-- <font-awesome-icon :icon="item.iconClass"></font-awesome-icon> -->
                             <span>{{ item.name }}</span>
                         </template>
                         <el-menu-item-group v-for="(child, index) in item.children" :key="index">
                             <el-menu-item :index="child.path">{{ child.name }}</el-menu-item>
                         </el-menu-item-group>
-                    </el-submenu>
+                    </el-sub-menu>
                 </template>
             </el-menu>
         </el-aside>
