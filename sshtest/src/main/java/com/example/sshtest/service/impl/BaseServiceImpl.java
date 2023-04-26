@@ -5,6 +5,7 @@ import com.example.sshtest.pojo.Dept;
 import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 public class BaseServiceImpl<T> implements BaseService<T> {
     @Autowired
@@ -16,4 +17,21 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         p.setTotal(baseDao.count());
         return p;
     }
+
+    @Override
+    public void delete(T o) {
+        baseDao.delete(o);
+    }
+
+    @Override
+    public void save(T o) {
+        baseDao.save(o);
+    }
+
+    @Override
+    public void update(T o) {
+        baseDao.update(o);
+    }
+
+
 }

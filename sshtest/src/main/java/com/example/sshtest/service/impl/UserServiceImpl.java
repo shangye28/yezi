@@ -33,7 +33,84 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Autowired
     private UserDao userDao;
 
-//    @Autowired
+
+    /**
+     * 根据用户名查询用户
+     * @param username
+     * @return
+     */
+    @Override
+    public PageVO<User> findByUsername(String username) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByUsername(username));
+        p.setTotal(userDao.countByUsername(username));
+        return p;
+    }
+
+    /**
+     * 根据昵称查询用户
+     * @param nickname
+     * @return
+     */
+    @Override
+    public PageVO<User> findByNickname(String nickname) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByNickname(nickname));
+        p.setTotal(userDao.countByNickname(nickname));
+        return p;
+    }
+
+    /**
+     * 部门筛选用户信息
+     * @param deptName
+     * @return
+     */
+    @Override
+    public PageVO<User> findByDeptName(String deptName) {
+        PageVO<User> p = new PageVO<>();
+        p.setList(userDao.findByDeptName(deptName));
+        p.setTotal(userDao.countByDeptName(deptName));
+        return p;
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        return userDao.getByUsername(username);
+    }
+
+
+
+//    @Override
+//    @Transactional
+//    public boolean resetPassword(PasswordDTO pd) {
+//        User user = userDao.getById(pd.getUserId());
+//        String oldPassword = passwordEncoder.encode(pd.getOldP());
+//        if(pd.getNewP1().equals(pd.getNewP2()) && user.getPassword().equals(oldPassword)){
+//            String newPassword = passwordEncoder.encode(pd.getNewP1());
+//            user.setPassword(newPassword);
+//            userDao.update(user);
+//            return true;
+//        }else
+//            return false;
+//    }
+
+    /**
+     * 检查用户名是否唯一
+     * @param username
+     * @return
+     */
+    @Override
+    public boolean checkUsernameUnique(String username) {
+        if(userDao.getByUsername(username) == null)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
+    //    @Autowired
 //    private PasswordEncoder passwordEncoder ;
 
 //    @Override
@@ -74,85 +151,4 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 //        // 返回
 //        return R.SUCCESS() ;
 //    }
-
-    @Override
-    public PageVO<User> findByUsername(String username) {
-        PageVO<User> p = new PageVO<>();
-        p.setList(userDao.findByUsername(username));
-        p.setTotal(userDao.countByUsername(username));
-        return p;
-    }
-
-    @Override
-    public PageVO<User> findByNickname(String nickname) {
-        PageVO<User> p = new PageVO<>();
-        p.setList(userDao.findByNickname(nickname));
-        p.setTotal(userDao.countByNickname(nickname));
-        return p;
-    }
-
-    @Override
-    public PageVO<User> findByDeptName(String deptName) {
-        PageVO<User> p = new PageVO<>();
-        p.setList(userDao.findByDeptName(deptName));
-        p.setTotal(userDao.countByDeptName(deptName));
-        return p;
-    }
-
-
-    @Override
-    @Transactional
-    public boolean delete(Integer userId) {
-        User user = userDao.getById(userId);
-        if(user != null){
-            userDao.delete(user);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    @Override
-    @Transactional
-    public boolean save(User user) {
-        if(checkUsernameUnique(user.getUsername()) ){
-            userDao.save(user);
-            return true;
-        }else
-            return false;
-    }
-
-
-    @Override
-    @Transactional
-    public boolean update(User user) {
-        if(userDao.getByUsername(user.getUsername()) != null){
-            userDao.update(user);
-            return true;
-        }else
-            return false;
-    }
-
-
-//    @Override
-//    @Transactional
-//    public boolean resetPassword(PasswordDTO pd) {
-//        User user = userDao.getById(pd.getUserId());
-//        String oldPassword = passwordEncoder.encode(pd.getOldP());
-//        if(pd.getNewP1().equals(pd.getNewP2()) && user.getPassword().equals(oldPassword)){
-//            String newPassword = passwordEncoder.encode(pd.getNewP1());
-//            user.setPassword(newPassword);
-//            userDao.update(user);
-//            return true;
-//        }else
-//            return false;
-//    }
-
-    @Override
-    public boolean checkUsernameUnique(String username) {
-        if(userDao.getByUsername(username) == null)
-            return true;
-        else
-            return false;
-    }
 }

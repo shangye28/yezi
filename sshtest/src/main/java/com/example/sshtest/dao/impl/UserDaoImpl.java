@@ -2,55 +2,47 @@ package com.example.sshtest.dao.impl;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
-import com.example.sshtest.utils.CRUDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import java.util.*;
 
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
+    @Autowired
+    private NativeQuery<User> nativeQuery;
     @Override
     public List<User> findByUsername(String username) {
-        CRUDUtils<User> crudUtils = new CRUDUtils<>();
-        String hql = "from User where username like :username";
-        String n = "%" + username + "%";
-        Query query = this.entityManager.createQuery(hql,User.class);
-        return crudUtils.find(query,"username", n);
+        String hql = "from User where username like concat('%', :username, '%')";
+        return nativeQuery.find(hql,"username", username, User.class);
     }
 
     @Override
     public List<User> findByNickname(String nickname) {
-        CRUDUtils<User> crudUtils = new CRUDUtils<>();
-        String hql = "from User where nickname like :nickname";
-        String n = "%" + nickname + "%";
-        Query query = this.entityManager.createQuery(hql, User.class);
-        return crudUtils.find(query,"nickname", n);
+        String hql = "from User where nickname like concat('%', :nickname, '%')";
+        return nativeQuery.find(hql,"nickname", nickname, User.class);
     }
 
     @Override
     public List<User> findByDeptName(String deptName) {
-        CRUDUtils<User> crudUtils = new CRUDUtils<>();
         String hql = "from User left join Dept on User.dept_id=Dept.dept_id where Dept.dept_name=:deptName";
-        Query query = this.entityManager.createQuery(hql, User.class);
-        return crudUtils.find(query, "deptName", deptName);
+        return nativeQuery.find(hql,"deptName", deptName, User.class);
     }
 
     @Override
     public Long countByUsername(String username) {
-        String hql = "select count(*) from User where username like :username";
-        String n = "%" + username + "%";
+        String hql = "select count(*) from User where username like concat('%', :username, '%')";
         Query q = this.entityManager.createQuery(hql);
-        q.setParameter("username",n);
+        q.setParameter("username",username);
         Long total = (Long) q.getSingleResult();
         return total;
     }
 
     @Override
     public Long countByNickname(String nickname) {
-        String hql = "select count(*) from User where nickname like :nickname";
-        String n = "%" + nickname + "%";
+        String hql = "select count(*) from User where nickname like concat('%', :nickname, '%')";
         Query q = this.entityManager.createQuery(hql);
-        q.setParameter("nickname",n);
+        q.setParameter("nickname",nickname);
         Long total = (Long) q.getSingleResult();
         return total;
     }
@@ -66,10 +58,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
     @Override
     public User getByUsername(String username) {
-        CRUDUtils<User> crudUtils = new CRUDUtils<>();
         String hql = "from User where username=:username";
-        Query q = this.entityManager.createQuery(hql,User.class);
-        return crudUtils.get(q, "username", username);
+        return nativeQuery.get(hql,"username", username, User.class);
     }
 
 

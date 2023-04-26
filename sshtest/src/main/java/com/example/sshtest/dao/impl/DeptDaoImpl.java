@@ -3,7 +3,7 @@ package com.example.sshtest.dao.impl;
 
 import com.example.sshtest.dao.DeptDao;
 import com.example.sshtest.pojo.Dept;
-import com.example.sshtest.utils.CRUDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -12,13 +12,12 @@ import java.util.List;
 
 @Repository("DeptDao")
 public class DeptDaoImpl extends BaseDaoImpl<Dept> implements DeptDao {
+    @Autowired
+    private NativeQuery<Dept> nativeQuery;
     @Override
     public List<Dept> findByDeptName(String deptName) {
-        CRUDUtils<Dept> crudUtils = new CRUDUtils<>();
-        String hql = "from Dept where dept_name like :deptName";
-        String n = "%" + deptName + "%";
-        Query query = this.entityManager.createQuery(hql, Dept.class);
-        return crudUtils.find(query, "deptName", n);
+        String hql = "from Dept where dept_name like concat('%', :deptName, '%')";
+        return nativeQuery.find(hql,"deptName", deptName, Dept.class);
     }
 
     @Override
@@ -33,9 +32,7 @@ public class DeptDaoImpl extends BaseDaoImpl<Dept> implements DeptDao {
 
     @Override
     public Dept getByDeptName(String deptName) {
-        CRUDUtils<Dept> crudUtils = new CRUDUtils<>();
         String hql = "from Dept where dept_name=:menuName";
-        Query q = this.entityManager.createQuery(hql, Dept.class);
-        return crudUtils.get(q, "deptName", deptName);
+        return nativeQuery.get(hql,"deptName", deptName, Dept.class);
     }
 }

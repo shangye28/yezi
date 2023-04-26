@@ -19,15 +19,13 @@ public interface UserService extends BaseService<User>{
     public PageVO<User> findByUsername(String username);
     public PageVO<User> findByNickname(String username);
     public PageVO<User> findByDeptName(String deptName);
-    public boolean delete(Integer userId);
-    public boolean save(User user);
-    public boolean update(User user);
+    public User getByUsername(String username);
 
-    /**
-     * 修改密码
-     *
-     * @param pd
-     */
+//    /**
+//     * 修改密码
+//     *
+//     * @param pd
+//     */
 //    public boolean resetPassword(PasswordDTO pd);
 
     /**

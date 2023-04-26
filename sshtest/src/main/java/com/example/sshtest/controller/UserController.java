@@ -46,6 +46,11 @@ public class UserController {
         return R.SUCCESS(userService.findByDeptName(dept.getDeptName()));
     }
 
+    @GetMapping("/getByUsername")
+    public R<User> getByUsername(String username){
+        return R.SUCCESS(userService.getByUsername(username));
+    }
+
 
 //    @RequestMapping("/resetPwd")
 //    public R resetPwd(@RequestBody PasswordDTO pd){

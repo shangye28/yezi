@@ -20,35 +20,6 @@ public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptServic
     }
 
     @Override
-    public boolean delete(Integer deptId) {
-        Dept role = deptDao.getById(deptId);
-        if(role != null){
-            deptDao.delete(role);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    @Override
-    public boolean save(Dept dept) {
-        if(checkDeptNameUnique(dept.getDeptName()) ){
-            deptDao.save(dept);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
-    public boolean update(Dept dept) {
-        if(deptDao.getByDeptName(dept.getDeptName()) != null){
-            deptDao.update(dept);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
     public boolean checkDeptNameUnique(String deptName) {
         return false;
     }

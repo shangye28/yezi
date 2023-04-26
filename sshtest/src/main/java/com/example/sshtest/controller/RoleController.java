@@ -33,8 +33,8 @@ public class RoleController {
     }
 
     @GetMapping("/findByRoleName")
-    public R<PageVO<Role>> findByRoleName(@RequestBody Role role){
-        return R.SUCCESS(roleService.findByRoleName(role.getRoleName()));
+    public R<PageVO<Role>> findByRoleName(String roleName){
+        return R.SUCCESS(roleService.findByRoleName(roleName));
     }
 
     @DeleteMapping("/delete")

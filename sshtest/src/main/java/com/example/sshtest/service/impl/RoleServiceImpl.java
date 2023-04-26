@@ -21,39 +21,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     }
 
     @Override
-    @Transactional
-    public boolean delete(Integer roleId) {
-        Role role = roleDao.getById(roleId);
-        if(role != null){
-            roleDao.delete(role);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    @Override
-    @Transactional
-    public boolean save(Role role) {
-        if(checkRoleNameUnique(role.getRoleName()) ){
-            roleDao.save(role);
-            return true;
-        }else
-            return false;
-    }
-
-
-    @Override
-    @Transactional
-    public boolean update(Role role) {
-        if(roleDao.getByRoleName(role.getRoleName()) != null){
-            roleDao.update(role);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
     public boolean checkRoleNameUnique(String roleName) {
         if(roleDao.getByRoleName(roleName) == null)
             return true;
