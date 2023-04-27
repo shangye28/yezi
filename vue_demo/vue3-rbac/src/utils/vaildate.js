@@ -20,3 +20,14 @@ export function passRule(rule, value, callback) {
         callback();
     }
 }
+//邮箱格式
+export function emailRule(rule, value, callback) {
+    let reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(value === "") {
+                callback(new Error('请输入邮箱'));
+            } else if (!reg.test(value)) {
+                callback(new Error('邮箱格式不正确'));
+            } else {
+                callback();
+            }
+}

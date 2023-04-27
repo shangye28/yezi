@@ -8,7 +8,7 @@
       size="small"
     >
       <el-form-item label="角色名">
-        <el-input v-model="formInline.name" placeholder="请输入"></el-input>
+        <el-input v-model="formInline.roleName" placeholder="请输入"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="find()">查询</el-button>
@@ -19,24 +19,22 @@
     </el-form>
 
     <el-table :data="compData" style="width: 100%">
-      <el-table-column prop="roleName" label="角色名" align="center">
+      <el-table-column prop="roleName" label="角色名" align="center" width="240" >
       </el-table-column>
-      <el-table-column prop="roleKey" label="角色值" align="center">
+      <el-table-column prop="roleKey" label="角色值" align="center" width="240" >
       </el-table-column>
-      <el-table-column prop="roleSort" label="排序" align="center">
+      <el-table-column prop="roleSort" label="排序" align="center" width="120" >
       </el-table-column>
-      <el-table-column prop="status_text" label="状态" align="center">
+      <el-table-column prop="status_text" label="状态" align="center"  width="240">
       </el-table-column>
-      <el-table-column prop="remake" label="备注" align="center">
+      <el-table-column prop="remake" label="备注" align="center" width="300">
       </el-table-column>
-      <el-table-column label="操作" align="center">
-        <template v-slot:scope>
-          <el-button
-            type="danger"
-            size="mini"
-            icon="el-icon-delete"
-            @click="del(scope.row)"
-          ></el-button>
+      <el-table-column fixed="right" label="操作" width="200">
+        <template #default="scope">
+          <el-button link type="primary" size="small">Edit</el-button>
+          <el-button link type="primary" size="small" @click="del(scope.row)"
+            >Delete</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import { roleAll } from "@/api/api.js";
+import { roleAll, findByRoleName, roleDel } from "@/api/api.js";
 
 export default {
   data() {
@@ -64,7 +62,10 @@ export default {
       pageSize: 10, //每页显示条数
       total: 0, //总条数
       formInline: {
-        name: "",
+        roleName: "",
+      },
+      row: {
+        roleName: "",
       },
     };
   },
@@ -82,7 +83,13 @@ export default {
   methods: {
     find() {
       console.log(this.formInline);
-      this.getData(this.formInline);
+      findByRoleName(this.formInline).then((res) => {
+        console.log(res);
+        if (res.data.statusCode === 200) {
+          this.tableData = res.data.data.list;
+          this.total = res.data.data.total;
+        }
+      });
     },
     reset() {
       console.log(this.formInline);
@@ -107,6 +114,16 @@ export default {
               ? (item.status_text = "停用")
               : (item.status_text = "正常");
           });
+        }
+      });
+    },
+    del(row) {
+      console.log(row);
+      studentDel(row).then((res) => {
+        console.log(res);
+        if (res.data.status === 200) {
+          this.$message({ message: "删除成功", type: "success" });
+          this.getData();
         }
       });
     },

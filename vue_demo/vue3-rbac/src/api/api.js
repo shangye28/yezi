@@ -18,21 +18,32 @@ export function userAll() {
 }
 
 //用户查询接口
-export function findByUsername(params) {
+export function findByName(params) {
     return service({
         method: 'get',
-        url: '/user/findByUsername',
+        url: '/user/findByName',
         params    
     })
 }
 
-//学生列表删除接口
-export function studentDel(id) {
+//用户列表删除接口
+export function deleteUser(returnData) {
     return service({
         method: 'delete',
-        url: '/students/${id}'
+        url: '/user/delete',
+        data: returnData
     })
 }
+
+//用户列表新增接口
+export function userAdd(data) {
+    return service({
+        method: 'post',
+        url: '/user/save',
+        data
+    })
+}
+
 
 
 
@@ -43,6 +54,25 @@ export function roleAll() {
         url: '/role/view'    
     })
 }
+
+//角色查询接口
+export function findByRoleName(params) {
+    return service({
+        method: 'get',
+        url: '/role/findByRoleName',
+        params    
+    })
+}
+
+//角色列表删除接口
+export function roleDel(name) {
+    return service({
+        method: 'delete',
+        url: '/role/delete',
+        name
+    })
+}
+
 //部门列表接口
 export function deptAll() {
     return service({
