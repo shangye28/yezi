@@ -30,25 +30,19 @@ public class MenuConroller {
 
     @DeleteMapping("/delete")
     public R deleteMenu(@RequestBody Menu menu){
-        if(menuService.delete(menu.getMenuId()))
+        menuService.delete(menu);
             return R.SUCCESS();
-        else
-            return R.FAIL();
     }
 
     @PostMapping("/save")
     public R saveMenu(@RequestBody Menu menu){
-        if(menuService.save(menu))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        menuService.save(menu);
+        return R.SUCCESS();
     }
 
     @PutMapping("/update")
     public R updateMenu(@RequestBody Menu menu){
-        if(menuService.update(menu))
+        menuService.update(menu);
             return R.SUCCESS();
-        else
-            return R.FAIL();
     }
 }

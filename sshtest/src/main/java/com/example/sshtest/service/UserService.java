@@ -16,8 +16,7 @@ public interface UserService extends BaseService<User>{
 //
 //    public R loginOut();
 
-    public PageVO<User> findByUsername(String username);
-    public PageVO<User> findByNickname(String username);
+    public PageVO<User> findByName(String username, String nickname);
     public PageVO<User> findByDeptName(String deptName);
     public User getByUsername(String username);
 

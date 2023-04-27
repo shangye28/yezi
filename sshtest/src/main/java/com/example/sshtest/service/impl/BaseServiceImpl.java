@@ -19,16 +19,19 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    @Transactional
     public void delete(T o) {
         baseDao.delete(o);
     }
 
     @Override
+    @Transactional
     public void save(T o) {
         baseDao.save(o);
     }
 
     @Override
+    @Transactional
     public void update(T o) {
         baseDao.update(o);
     }

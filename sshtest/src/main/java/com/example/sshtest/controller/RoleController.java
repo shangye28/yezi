@@ -39,26 +39,20 @@ public class RoleController {
 
     @DeleteMapping("/delete")
     public R deleteRole(@RequestBody Role role){
-        if(roleService.delete(role.getRoleId()))
+        roleService.delete(role);
             return R.SUCCESS();
-        else
-            return R.FAIL();
     }
 
     @PostMapping("/save")
     public R saveRole(@RequestBody Role role){
-        if(roleService.save(role))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        roleService.save(role);
+        return R.SUCCESS();
     }
 
     @PutMapping("/update")
     public R updateRole(@RequestBody Role role){
-        if(roleService.update(role))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        roleService.update(role);
+        return R.SUCCESS();
     }
 
 }

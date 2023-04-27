@@ -28,25 +28,19 @@ public class DeptController {
 
     @DeleteMapping("/delete")
     public R deleteDept(@RequestBody Dept dept){
-        if(deptService.delete(dept.getDeptId()))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        deptService.delete(dept);
+        return R.SUCCESS();
     }
 
     @PostMapping("/save")
     public R saveDept(@RequestBody Dept dept){
-        if(deptService.save(dept))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        deptService.save(dept);
+        return R.SUCCESS();
     }
 
     @PutMapping("/update")
     public R updateDept(@RequestBody Dept dept){
-        if(deptService.update(dept))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        deptService.update(dept);
+        return R.SUCCESS();
     }
 }

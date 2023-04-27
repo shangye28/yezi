@@ -29,17 +29,20 @@ public class UserController {
         return R.SUCCESS(userService.findAll());
     }
 
-
-
-    @GetMapping("/findByUsername")
-    public R<PageVO<User>> findByUsername(String username){
-        return R.SUCCESS(userService.findByUsername(username));
+    @GetMapping("/findByName")
+    public R<PageVO<User>> findByName(String username, String nickname){
+        return R.SUCCESS(userService.findByName(username, nickname));
     }
 
-    @GetMapping("/findByNickname")
-    public R<PageVO<User>> findByNickname(@RequestBody User user){
-        return R.SUCCESS(userService.findByNickname(user.getNickname()));
-    }
+//    @GetMapping("/findByUsername")
+//    public R<PageVO<User>> findByUsername(String username){
+//        return R.SUCCESS(userService.findByUsername(username));
+//    }
+//
+//    @GetMapping("/findByNickname")
+//    public R<PageVO<User>> findByNickname(@RequestBody User user){
+//        return R.SUCCESS(userService.findByNickname(user.getNickname()));
+//    }
 
     @GetMapping("/findByDeptName")
     public R<PageVO<User>> findByDept(@RequestBody Dept dept){
@@ -62,27 +65,21 @@ public class UserController {
 
     @DeleteMapping("/delete")
     public R deleteUser(@RequestBody User user){
-        if(userService.delete(user.getUserId()))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
-
+        System.out.println(user.toString());
+        User user1 = userDao.getByUsername(user.getUsername());
+        userService.delete(user1);
+        return R.SUCCESS();
     }
-//    @RequiresPermissions("user:delete")
     @PostMapping("/save")
     public R saveUser(@RequestBody User user){
-        if(userService.save(user))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        System.out.println(user.toString());
+        userService.save(user);
+        return R.SUCCESS();
     }
-
     @PutMapping("/update")
     public R updateUser(@RequestBody User user){
-        if(userService.update(user))
-            return R.SUCCESS();
-        else
-            return R.FAIL();
+        userService.update(user);
+        return R.SUCCESS();
     }
 
 

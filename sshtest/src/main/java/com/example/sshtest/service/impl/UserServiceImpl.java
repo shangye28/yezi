@@ -35,28 +35,23 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
     /**
-     * 根据用户名查询用户
+     * 根据用户名或昵称查询用户
      * @param username
      * @return
      */
     @Override
-    public PageVO<User> findByUsername(String username) {
+    public PageVO<User> findByName(String username, String nickname) {
         PageVO<User> p = new PageVO<>();
-        p.setList(userDao.findByUsername(username));
-        p.setTotal(userDao.countByUsername(username));
-        return p;
-    }
-
-    /**
-     * 根据昵称查询用户
-     * @param nickname
-     * @return
-     */
-    @Override
-    public PageVO<User> findByNickname(String nickname) {
-        PageVO<User> p = new PageVO<>();
-        p.setList(userDao.findByNickname(nickname));
-        p.setTotal(userDao.countByNickname(nickname));
+        System.out.println(username+1111);
+        if(!username.equals("")){
+            System.out.println(username+2222);
+            p.setList(userDao.findByUsername(username));
+            p.setTotal(userDao.countByUsername(username));
+        }else{
+            System.out.println(nickname+3333);
+            p.setList(userDao.findByNickname(nickname));
+            p.setTotal(userDao.countByNickname(nickname));
+        }
         return p;
     }
 
