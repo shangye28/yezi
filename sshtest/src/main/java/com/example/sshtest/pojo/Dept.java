@@ -37,6 +37,7 @@ public class Dept {
     /**
      * 父部门多对一
      */
+    @JsonIgnore     //json输出时忽略，防止出现数据死循环
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parentId", insertable = false, updatable = false)
     private Dept parent;
@@ -44,8 +45,7 @@ public class Dept {
     /**
      * 子部门一多多
      */
-    @JsonIgnore     //json输出时忽略，防止出现数据死循环
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deptId", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentId", orphanRemoval = true)
     private Set<Dept> depts = new LinkedHashSet<>();
 
     /**
