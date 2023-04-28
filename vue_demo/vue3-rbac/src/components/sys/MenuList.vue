@@ -22,7 +22,7 @@
       </el-form>
     </div>
 
-    <!-- <el-card shadow="never">
+     <el-card shadow="never">
       <template #header>
         <el-button type="success" @click="openDialog(0)">
           <template #icon><i-ep-plus /></template>
@@ -32,7 +32,7 @@
 
       <el-table
         v-loading="loading"
-        :data="menuList"
+        :data="compData"
         highlight-current-row
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         @row-click="onRowClick"
@@ -117,8 +117,8 @@
             </el-button>
           </template>
         </el-table-column>
-      </el-table> -->
-    <!-- </el-card> -->
+      </el-table>
+    </el-card>
 
     <!-- <el-dialog
       :title="dialog.title"
@@ -263,6 +263,16 @@ export default {
   created() {
     this.getData();
   },
+  computed: {
+    compData() {
+      return this.tableData.slice(
+        (this.currentPage - 1) * this.pageSize,
+        this.currentPage * this.pageSize
+      );
+    },
+  },
+
+
   methods: {
     getData() {
       menuAll().then((res) => {
@@ -290,6 +300,32 @@ export default {
       queryFormRef.value.resetFields();
       handleQuery();
     },
+    /**
+ * 打开表单弹窗
+ *
+ * @param parentId 父菜单ID
+ * @param menuId 菜单ID
+ */
+    openDialog() {
+  listMenuOptions()
+    .then(({ data }) => {
+      menuOptions.value = [{ value: 0, label: '顶级菜单', children: data }];
+    })
+    .then(() => {
+      dialog.visible = true;
+      if (menuId) {
+        dialog.title = '编辑菜单';
+        getMenuForm(menuId).then(({ data }) => {
+          Object.assign(formData, data);
+          menuCacheData.type = data.type;
+          menuCacheData.path = data.path ?? '';
+        });
+      } else {
+        dialog.title = '新增菜单';
+        formData.parentId = parentId;
+      }
+    });
+}
   },
 };
 </script>
