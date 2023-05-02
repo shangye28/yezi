@@ -27,11 +27,11 @@ export function findByName(params) {
 }
 
 //用户列表删除接口
-export function deleteUser(returnData) {
+export function deleteUser(params) {
     return service({
         method: 'delete',
         url: '/user/delete',
-        data: returnData
+        params
     })
 }
 

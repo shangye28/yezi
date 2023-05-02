@@ -50,6 +50,9 @@
         <el-form-item label="电话" prop="phone" :label-width="formLabelWidth">
           <el-input v-model="form.phone" autocomplete="off" />
         </el-form-item>
+        <el-form-item label="备注" prop="remake" :label-width="formLabelWidth">
+          <el-input v-model="form.remake" autocomplete="off" />
+        </el-form-item>
     <el-form-item>
         <el-select v-model="form.deptId" placeholder="部门">
           <el-option label="研发部" value="15" />
@@ -57,7 +60,7 @@
         </el-select>
     </el-form-item>
 <el-form-item>
-        <el-select v-model="form.roles.roleId" placeholder="角色">
+        <el-select v-model="form.role" placeholder="角色">
           <el-option label="超级管理员" value="1" />
           <el-option label="管理员" value="2" />
           <el-option label="普通用户" value="3" />
@@ -110,7 +113,7 @@
 
       <el-table-column fixed="right" label="操作" align="center" width="200">
         <template #default="scope">
-          <el-button
+          <!-- <el-button
             type="primary"
             size="small"
             text
@@ -127,6 +130,7 @@
         >
           <el-input v-model="password.password" autocomplete="off" />
         </el-form-item>
+        
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -136,14 +140,19 @@
           </el-button>
         </span>
       </template>
-    </el-dialog>
+    </el-dialog> -->
 
           <el-button link type="primary" size="small" @click="update(scope.row)"
             >编辑</el-button
           >
-          <el-button link type="primary" size="small" @click="del(scope.row)"
-            >删除</el-button
-          >
+          <el-button
+          link
+          type="primary"
+          size="small"
+          @click.prevent="deleteRow(scope.row)"
+        >
+          删除
+        </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -177,7 +186,6 @@ export default {
         nickname: "",
       },
       dialogFormVisible: false,
-      dialogPasswordVisible: false,
       password: {
         password: "",
       },
@@ -187,10 +195,9 @@ export default {
         email: "",
         sex: "1",
         phone: "",
+        remake: "",
         deptId: "",
-        roles: {
-            roleId: "",
-        }
+        role: ""
       },
       formLabelWidth: "80px",
       rules: {
@@ -273,27 +280,16 @@ export default {
         }
       });
     },
-    del(row) {
-      console.log(row);
-      deleteUser(row.username).then((res) => {
-        console.log(res);
+    deleteRow(row) {
+        let data = {"username": row.username}
+      console.log(row.username);
+      deleteUser(data).then((res) => {
         if (res.data.status === 200) {
           this.$message({ message: "删除成功", type: "success" });
           this.getData();
         }
       });
     },
-
-    // select(row) {
-    //   console.log(row);
-    //   studentDel(row.id).then((res) => {
-    //     console.log(res);
-    //     if (res.data.status === 200) {
-    //       this.$message({ message: "删除成功", type: "success" });
-    //       this.getData();
-    //     }
-    //   });
-    // },
 
     update(row) {
       console.log(row);
@@ -313,7 +309,9 @@ export default {
             userAdd(this.form).then(res => {
                 if (res.data.status === 200) {
           this.$message({ message: "操作成功", type: "success" });
+          this.dialogFormVisible = false;
           this.getData();
+
         }
             })
         }

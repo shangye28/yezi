@@ -31,9 +31,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
-          <el-button link type="primary" size="small">Edit</el-button>
+          <el-button link type="primary" size="small">编辑</el-button>
           <el-button link type="primary" size="small" @click="del(scope.row)"
-            >Delete</el-button
+            >删除</el-button
           >
         </template>
       </el-table-column>

@@ -1,10 +1,13 @@
 <template>
   <div class="login-body">
+
     <el-card class="box-card">
       <div class="clearfix">
         <span>RBAC后台管理系统</span>
       </div>
-      <el-form label-width="80px" :model="form" ref="form" :rules="rules">
+
+      <div class="form">
+        <el-form label-width="80px" :model="form" ref="form" :rules="rules">
         <el-form-item label="用户名" prop="username">
           <el-input
             placeholder="请输入用户名"
@@ -22,7 +25,9 @@
           <el-button type="primary" @click="login('form')">登录</el-button>
         </el-form-item>
       </el-form>
+      </div>
     </el-card>
+
   </div>
 </template>
 
@@ -110,6 +115,7 @@ export default {
 
     .clearfix {
       font-size: 34px;
+      margin: 20px;
     }
 
     .el-button {
