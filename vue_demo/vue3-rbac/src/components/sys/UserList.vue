@@ -145,6 +145,7 @@
           <el-button link type="primary" size="small" @click="update(scope.row)"
             >编辑</el-button
           >
+
           <el-button
           link
           type="primary"
@@ -227,7 +228,10 @@ export default {
           this.tableData = res.data.data.list;
           this.total = res.data.data.total;
           this.tableData.forEach((item) => {
-            item.role = item.roles[0].roleName;
+            console.log(item.roles);
+            if(item.roles.length != 0){
+                item.role = item.roles[0].roleName;
+            }  
             if(item.createTime != null){
                 item.createTime_text = item.createTime
               .replace(/T/g, " ")
@@ -260,7 +264,9 @@ export default {
           this.tableData = res.data.data.list;
           this.total = res.data.data.total;
           this.tableData.forEach((item) => {
-            item.role = item.roles[0].roleName;
+            if(item.roles.length != 0){
+                item.role = item.roles[0].roleName;
+            }  
             item.createTime_text = item.createTime
               .replace(/T/g, " ")
               .replace(/\.[\d]{3}Z/, "");
