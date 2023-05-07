@@ -10,7 +10,6 @@ import com.example.sshtest.pojo.vo.PageVO;
 import com.example.sshtest.pojo.dto.PasswordDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
-import com.example.sshtest.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.AuthenticationManager;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,13 +41,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public PageVO<User> findByName(String username, String nickname) {
         PageVO<User> p = new PageVO<>();
-        System.out.println(username+1111);
-        if(!username.equals("")){
-            System.out.println(username+2222);
+        if(username != null){
             p.setList(userDao.findByUsername(username));
             p.setTotal(userDao.countByUsername(username));
         }else{
-            System.out.println(nickname+3333);
             p.setList(userDao.findByNickname(nickname));
             p.setTotal(userDao.countByNickname(nickname));
         }

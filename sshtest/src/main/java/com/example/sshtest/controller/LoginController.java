@@ -35,8 +35,6 @@ public class LoginController {
      */
     @RequestMapping("/login")
     public R userLogin(@RequestBody LoginDTO loginDTO){
-        System.out.println(MD5Utils.getMD5("123456"));
-
         String username = loginDTO.getUsername();
         String p = loginDTO.getPassword();
         //密码加密
@@ -55,6 +53,7 @@ public class LoginController {
             return R.FAIL();
         }
     }
+
 //
 //    @PostMapping(value = "/login")
 //    public R login(@RequestBody LoginDTO loginDTO) {

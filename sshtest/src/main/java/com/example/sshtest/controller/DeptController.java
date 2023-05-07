@@ -8,6 +8,8 @@ import com.example.sshtest.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/dept")
 public class DeptController {
@@ -19,6 +21,11 @@ public class DeptController {
     @GetMapping("/view")
     public R<PageVO<Dept>> findAll(){
         return R.SUCCESS(deptService.findAll());
+    }
+
+    @GetMapping("/treeList")
+    public R<List<Dept>> treeList(){
+        return R.SUCCESS(deptService.treeList());
     }
 
     @GetMapping("/findByMenuName")

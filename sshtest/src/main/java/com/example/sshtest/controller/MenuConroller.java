@@ -8,6 +8,8 @@ import com.example.sshtest.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/menu")
 public class MenuConroller {
@@ -21,6 +23,11 @@ public class MenuConroller {
     @GetMapping("/view")
     public R<PageVO<Menu>> findAll(){
         return R.SUCCESS(menuService.findAll());
+    }
+
+    @GetMapping("/treeList")
+    public R<List<Menu>> treeList(){
+        return R.SUCCESS(menuService.treeList());
     }
 
     @GetMapping("/findByMenuName")

@@ -28,19 +28,6 @@
             <scope>test</scope>
         </dependency>
 
-<!--        &lt;!&ndash;  boot-shiro整合依赖&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shiro</groupId>-->
-<!--            <artifactId>shiro-spring-boot-starter</artifactId>-->
-<!--            <version>1.10.0</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash;shiro缓存&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shiro</groupId>-->
-<!--            <artifactId>shiro-ehcache</artifactId>-->
-<!--            <version>1.7.1</version>-->
-<!--        </dependency>-->
 
 
         <!-- MysqL -->
@@ -79,11 +66,15 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.8.Final</version>
         </dependency>
-        <!-- spring-boot-starter-security -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>

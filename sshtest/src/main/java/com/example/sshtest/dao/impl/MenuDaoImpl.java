@@ -20,6 +20,14 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu> implements MenuDao {
     }
 
     @Override
+    public List<Menu> treeList() {
+        String hql = "from Menu where menu_type = 'M'";
+        Query query = this.entityManager.createQuery(hql, Menu.class);
+        List<Menu> resultList = query.getResultList();
+        return resultList;
+    }
+
+    @Override
     public Long countByMenuName(String menuName) {
         String hql = "select count(*) from Menu where menu_name like :menuName";
         String n = "%" + menuName + "%";

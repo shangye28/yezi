@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -64,15 +67,15 @@ public class UserController {
 //    }
 
     @DeleteMapping("/delete")
-    public R deleteUser(@RequestBody User user){
-        System.out.println(user.toString());
-        User user1 = userDao.getByUsername(user.getUsername());
+    public R deleteUser(String username){
+        System.out.println(username);
+        User user1 = userDao.getByUsername(username);
         userService.delete(user1);
         return R.SUCCESS();
     }
     @PostMapping("/save")
     public R saveUser(@RequestBody User user){
-        System.out.println(user.toString());
+        user.setCreateTime(LocalDateTime.now());
         userService.save(user);
         return R.SUCCESS();
     }

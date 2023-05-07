@@ -7,6 +7,8 @@ import com.example.sshtest.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptService {
     @Autowired
@@ -17,6 +19,11 @@ public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptServic
         p.setList(deptDao.findByDeptName(deptName));
         p.setTotal(deptDao.countByDeptName(deptName));
         return p;
+    }
+
+    @Override
+    public List<Dept> treeList() {
+        return deptDao.treeList();
     }
 
     @Override

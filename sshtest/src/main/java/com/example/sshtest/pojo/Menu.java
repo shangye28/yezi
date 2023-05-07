@@ -46,6 +46,7 @@ public class Menu {
     /**
      * 父菜单多对一
      */
+    @JsonIgnore     //json输出时忽略，防止出现数据死循环
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parentId", insertable = false, updatable = false)
     private Menu parent;
@@ -53,8 +54,7 @@ public class Menu {
     /**
      * 子菜单一多多
      */
-    @JsonIgnore     //json输出时忽略，防止出现数据死循环
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuId", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentId", orphanRemoval = true)
     private Set<Menu> menus = new LinkedHashSet<>();
 
     /**
@@ -134,14 +134,7 @@ public class Menu {
     }
 
     public Menu getParent() {
-        if(parent == null)
             return parent;
-        else{
-            Menu parent1 = new Menu();
-            parent1.setMenuId(parent.getMenuId());
-            parent1.setMenuName(parent.getMenuName());
-            return parent1;
-        }
     }
 
     public void setParent(Menu parent) {
@@ -184,7 +177,6 @@ public class Menu {
                 ", permission='" + permission + '\'' +
                 ", url='" + url + '\'' +
                 ", icon='" + icon + '\'' +
-                ", parent=" + parent +
                 ", menus=" + menus +
                 '}';
     }

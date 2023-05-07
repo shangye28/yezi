@@ -21,6 +21,14 @@ public class DeptDaoImpl extends BaseDaoImpl<Dept> implements DeptDao {
     }
 
     @Override
+    public List<Dept> treeList() {
+        String hql = "from Dept where dept_id = 1";
+        Query query = this.entityManager.createQuery(hql, Dept.class);
+        List<Dept> resultList = query.getResultList();
+        return resultList;
+    }
+
+    @Override
     public Long countByDeptName(String deptName) {
         String hql = "select count(*) from Dept where dept_name like :deptName";
         String n = "%" + deptName + "%";

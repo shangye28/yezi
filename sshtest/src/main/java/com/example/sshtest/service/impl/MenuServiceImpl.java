@@ -7,6 +7,8 @@ import com.example.sshtest.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuService {
     @Autowired
@@ -17,6 +19,11 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuServic
         p.setList(menuDao.findByMenuName(menuName));
         p.setTotal(menuDao.countByMenuName(menuName));
         return p;
+    }
+
+    @Override
+    public List<Menu> treeList() {
+        return menuDao.treeList();
     }
 
 

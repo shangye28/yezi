@@ -7,6 +7,7 @@ import java.util.List;
 public interface DeptDao extends BaseDao<Dept> {
     public List<Dept> findByDeptName(String deptName);
 
+    public List<Dept> treeList();
     public Long countByDeptName(String deptName);
 
     public Dept getByDeptName(String deptName);
