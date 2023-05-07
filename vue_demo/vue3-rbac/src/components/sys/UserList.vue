@@ -292,7 +292,7 @@ export default {
       deleteUser(data).then((res) => {
         if (res.data.status === 200) {
           this.$message({ message: "删除成功", type: "success" });
-          this.getData();
+          this.reset();
         }
       });
     },
@@ -303,7 +303,7 @@ export default {
         console.log(res);
         if (res.data.status === 200) {
           this.$message({ message: "删除成功", type: "success" });
-          this.getData();
+          this.reset();
         }
       });
     },
@@ -316,7 +316,7 @@ export default {
                 if (res.data.status === 200) {
           this.$message({ message: "操作成功", type: "success" });
           this.dialogFormVisible = false;
-          this.getData();
+          this.reset();
 
         }
             })
