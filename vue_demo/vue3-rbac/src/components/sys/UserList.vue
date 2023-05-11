@@ -1,119 +1,146 @@
 <template>
-  <div class="userList">
-    <!-- 查询数据、重置 -->
-    <el-form
-      :inline="true"
-      :model="formInline"
-      class="demo-form-inline"
-      size="primary"
-    >
-      <el-form-item label="用户名">
-        <el-input v-model="formInline.username" placeholder="请输入"></el-input>
-      </el-form-item>
+  <div class="user-root">
+    <div>
+      <el-tree
+        :data="treeDeptData"
+        :props="treeProps"
+        :default-expand-all="true"
+        :expand-on-click-node="false"
+        @node-click="handleNodeClick"
+      />
+    </div>
+    <div class="userList">
+      <!-- 查询数据、重置 -->
+      <el-form
+        :inline="true"
+        :model="formInline"
+        class="demo-form-inline"
+        size="primary"
+      >
+        <el-form-item label="用户名">
+          <el-input
+            v-model="formInline.username"
+            placeholder="请输入"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="昵称">
-        <el-input v-model="formInline.nickname" placeholder="请输入"></el-input>
-      </el-form-item>
+        <el-form-item label="昵称">
+          <el-input
+            v-model="formInline.nickname"
+            placeholder="请输入"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="find()">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="reset()">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-button type="primary" text @click="dialogFormVisible = true"> 新增 </el-button>
-    <el-dialog v-model="dialogFormVisible" title="添加用户信息" width="500px">
-      <el-form :model="form" :rules="rules" ref="form">
-        <el-form-item
-          label="用户名"
-          prop="username"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="form.username" autocomplete="off" />
+        <el-form-item>
+          <el-button type="primary" @click="find()">查询</el-button>
         </el-form-item>
-        <el-form-item
-          label="昵称"
-          prop="nickname"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="form.nickname" autocomplete="off" />
+        <el-form-item>
+          <el-button type="primary" @click="reset()">重置</el-button>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email" :label-width="formLabelWidth">
-          <el-input v-model="form.email" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="性别" prop="sex" :label-width="formLabelWidth">
-          <el-radio v-model="form.sex" label="1">男</el-radio>
-          <el-radio v-model="form.sex" label="2">女</el-radio>
-        </el-form-item>
-        <el-form-item label="电话" prop="phone" :label-width="formLabelWidth">
-          <el-input v-model="form.phone" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remake" :label-width="formLabelWidth">
-          <el-input v-model="form.remake" autocomplete="off" />
-        </el-form-item>
-    <el-form-item>
-        <el-select v-model="form.deptId" placeholder="部门">
-          <el-option label="研发部" value="15" />
-          <el-option label="市场部" value="16" />
-        </el-select>
-    </el-form-item>
-<el-form-item>
-        <el-select v-model="form.role" placeholder="角色">
-          <el-option label="超级管理员" value="1" />
-          <el-option label="管理员" value="2" />
-          <el-option label="普通用户" value="3" />
-        </el-select>
-    </el-form-item>
       </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="sure('form')">
-            确定
-          </el-button>
-        </span>
-      </template>
-    </el-dialog>
 
-    <!-- 表单数据 -->
-    <!-- <el-table :data="tableData.slice((currentPage-1) * pageSize, currentPage * pageSize)" style="width: 100%"> -->
-
-    <el-table :data="compData" style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="80">
-        <template #default="scope">
-          <span v-html="scope.$index + (currentPage - 1) * pageSize + 1"></span>
+      <el-button type="primary" text @click="dialogFormVisible = true">
+        新增
+      </el-button>
+      <el-dialog v-model="dialogFormVisible" title="添加用户信息" width="500px">
+        <el-form :model="form" :rules="rules" ref="form">
+          <el-form-item
+            label="用户名"
+            prop="username"
+            :label-width="formLabelWidth"
+          >
+            <el-input v-model="form.username" autocomplete="off" />
+          </el-form-item>
+          <el-form-item
+            label="昵称"
+            prop="nickname"
+            :label-width="formLabelWidth"
+          >
+            <el-input v-model="form.nickname" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email" :label-width="formLabelWidth">
+            <el-input v-model="form.email" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="性别" prop="sex" :label-width="formLabelWidth">
+            <el-radio v-model="form.sex" label="1">男</el-radio>
+            <el-radio v-model="form.sex" label="2">女</el-radio>
+          </el-form-item>
+          <el-form-item label="电话" prop="phone" :label-width="formLabelWidth">
+            <el-input v-model="form.phone" autocomplete="off" />
+          </el-form-item>
+          <el-form-item
+            label="备注"
+            prop="remake"
+            :label-width="formLabelWidth"
+          >
+            <el-input v-model="form.remake" autocomplete="off" />
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="form.deptId" placeholder="部门">
+              <el-option label="研发部" value="15" />
+              <el-option label="市场部" value="16" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="form.role" placeholder="角色">
+              <el-option label="超级管理员" value="1" />
+              <el-option label="管理员" value="2" />
+              <el-option label="普通用户" value="3" />
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button type="primary" @click="sure('form')"> 确定 </el-button>
+          </span>
         </template>
-      </el-table-column>
-      <el-table-column
-        prop="username"
-        label="用户名"
-        align="center"
-        width="120"
-      >
-      </el-table-column>
-      <el-table-column prop="nickname" label="昵称" align="center" width="120">
-      </el-table-column>
-      <el-table-column prop="email" label="邮箱" align="center" width="200">
-      </el-table-column>
-      <el-table-column prop="phone" label="电话" align="center" width="150">
-      </el-table-column>
-      <el-table-column
-        prop="createTime_text"
-        label="创建时间"
-        align="center"
-        width="110"
-      >
-      </el-table-column>
-      <el-table-column prop="role" label="角色" align="center" width="120">
-      </el-table-column>
-      <el-table-column prop="remake" label="备注" align="center" width="240">
-      </el-table-column>
+      </el-dialog>
 
-      <el-table-column fixed="right" label="操作" align="center" width="200">
-        <template #default="scope">
-          <!-- <el-button
+      <!-- 表单数据 -->
+      <!-- <el-table :data="tableData.slice((currentPage-1) * pageSize, currentPage * pageSize)" style="width: 100%"> -->
+
+      <el-table :data="compData" style="width: 100%">
+        <el-table-column type="index" label="序号" align="center" width="80">
+          <template #default="scope">
+            <span
+              v-html="scope.$index + (currentPage - 1) * pageSize + 1"
+            ></span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="用户名"
+          align="center"
+          width="120"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="nickname"
+          label="昵称"
+          align="center"
+          width="120"
+        >
+        </el-table-column>
+        <el-table-column prop="email" label="邮箱" align="center" width="200">
+        </el-table-column>
+        <el-table-column prop="phone" label="电话" align="center" width="150">
+        </el-table-column>
+        <el-table-column
+          prop="createTime_text"
+          label="创建时间"
+          align="center"
+          width="110"
+        >
+        </el-table-column>
+        <el-table-column prop="role" label="角色" align="center" width="120">
+        </el-table-column>
+        <el-table-column prop="remake" label="备注" align="center" width="240">
+        </el-table-column>
+
+        <el-table-column fixed="right" label="操作" align="center" width="200">
+          <template #default="scope">
+            <!-- <el-button
             type="primary"
             size="small"
             text
@@ -142,43 +169,55 @@
       </template>
     </el-dialog> -->
 
-          <el-button link type="primary" size="small" @click="update(scope.row)"
-            >编辑</el-button
-          >
+            <el-button
+              link
+              type="primary"
+              size="small"
+              @click="update(scope.row)"
+              >编辑</el-button
+            >
 
-          <el-button
-          link
-          type="primary"
-          size="small"
-          @click.prevent="deleteRow(scope.row)"
-        >
-          删除
-        </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+            <el-button
+              link
+              type="primary"
+              size="small"
+              @click.prevent="deleteRow(scope.row)"
+            >
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[5, 10, 20, 30, 50]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    >
-    </el-pagination>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 20, 30, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import { userAll, findByName, deleteUser, userAdd } from "@/api/api.js";
-import { nameRule, emailRule } from '../../utils/vaildate.js'
+import {
+  userAll,
+  findByName,
+  deleteUser,
+  userAdd,
+  treeDept,
+} from "@/api/api.js";
+import { nameRule, emailRule } from "../../utils/vaildate.js";
 export default {
   data() {
     return {
       // roleData: [],
       tableData: [],
+      treeDeptData: [],
       currentPage: 1, //当前页数
       pageSize: 10, //每页显示条数
       total: 0, //总条数
@@ -198,18 +237,23 @@ export default {
         phone: "",
         remake: "",
         deptId: "",
-        role: ""
+        role: "",
       },
       formLabelWidth: "80px",
       rules: {
-        username: [{validator: nameRule, trigger: 'blur'}], 
-        nickname: [{required: true, message: '请输入昵称'}],
-        email: [{validator: emailRule, trigger: 'blur'}],
+        username: [{ validator: nameRule, trigger: "blur" }],
+        nickname: [{ required: true, message: "请输入昵称" }],
+        email: [{ validator: emailRule, trigger: "blur" }],
+      },
+      treeProps: {
+        children: "depts",
+        label: "deptName",
       },
     };
   },
   created() {
     this.getData();
+    this.getTreeDept();
   },
   computed: {
     compData() {
@@ -229,13 +273,13 @@ export default {
           this.total = res.data.data.total;
           this.tableData.forEach((item) => {
             console.log(item.roles);
-            if(item.roles.length != 0){
-                item.role = item.roles[0].roleName;
-            }  
-            if(item.createTime != null){
-                item.createTime_text = item.createTime
-              .replace(/T/g, " ")
-              .replace(/\.[\d]{3}Z/, "");
+            if (item.roles.length != 0) {
+              item.role = item.roles[0].roleName;
+            }
+            if (item.createTime != null) {
+              item.createTime_text = item.createTime
+                .replace(/T/g, " ")
+                .replace(/\.[\d]{3}Z/, "");
             }
           });
         }
@@ -257,6 +301,14 @@ export default {
       this.currentPage = val;
     },
 
+    getTreeDept() {
+      treeDept().then((res) => {
+        if (res.data.statusCode === 200) {
+          this.treeDeptData = res.data.data;
+        }
+      });
+    },
+
     getData() {
       userAll().then((res) => {
         console.log(res);
@@ -264,9 +316,9 @@ export default {
           this.tableData = res.data.data.list;
           this.total = res.data.data.total;
           this.tableData.forEach((item) => {
-            if(item.roles.length != 0){
-                item.role = item.roles[0].roleName;
-            }  
+            if (item.roles.length != 0) {
+              item.role = item.roles[0].roleName;
+            }
             item.createTime_text = item.createTime
               .replace(/T/g, " ")
               .replace(/\.[\d]{3}Z/, "");
@@ -287,7 +339,7 @@ export default {
       });
     },
     deleteRow(row) {
-        let data = {"username": row.username}
+      let data = { username: row.username };
       console.log(row.username);
       deleteUser(data).then((res) => {
         if (res.data.status === 200) {
@@ -309,25 +361,41 @@ export default {
     },
 
     sure(form) {
-      this.$refs[form].validate(valid => {
-        if(valid) {
-            console.log(form, this.form)
-            userAdd(this.form).then(res => {
-                if (res.data.status === 200) {
-          this.$message({ message: "操作成功", type: "success" });
-          this.dialogFormVisible = false;
-          this.reset();
-
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          console.log(form, this.form);
+          userAdd(this.form).then((res) => {
+            if (res.data.status === 200) {
+              this.$message({ message: "操作成功", type: "success" });
+              this.dialogFormVisible = false;
+              this.reset();
+            }
+          });
         }
-            })
-        }
-      })
+      });
     },
   },
 };
 </script>
 
 <style lang="scss">
+.user-root {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  min-height: 100%;
+
+  & > div:nth-child(1) {
+    width: 200px;
+    min-height: 100%;
+    border-right: 80px solid var(--el-color-primary-light-2);
+  }
+
+  & > div:nth-child(2) {
+    flex: 1;
+  }
+}
+
 .userList {
   .demo-form-inline,
   .el-form-item {

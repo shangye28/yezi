@@ -73,6 +73,13 @@ export function roleDel(name) {
     })
 }
 
+//部门列表接口(部门树)
+export function treeDept() {
+    return service({
+        method: 'get',
+        url: '/dept/treeList'    
+    })
+}
 //部门列表接口
 export function deptAll() {
     return service({
@@ -80,6 +87,7 @@ export function deptAll() {
         url: '/dept/view'    
     })
 }
+
 //菜单列表接口
 export function menuAll() {
     return service({
