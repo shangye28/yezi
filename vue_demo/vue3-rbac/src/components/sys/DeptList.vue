@@ -1,14 +1,28 @@
 <template>
   <div>
-    <el-form :inline="true" :model="state.pages" class="demo-form-inline">
-      <el-form-item label="部门名称">
-        <el-input v-model="state.pages.deptName" placeholder="请输入部门名称" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSearch">查询</el-button>
-        <el-button @click="onReset">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-form
+        :inline="true"
+        :model="formInline"
+        class="demo-form-inline"
+        size="primary"
+      >
+        <el-form-item label="部门名称">
+          <el-input
+            v-model="formInline.deptName"
+            placeholder="请输入"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="find()">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="reset()">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+
+
 
     <div class="table-btn">
       <el-button type="primary" icon="Plus" @click="BtnAddDept">新增</el-button>
@@ -77,13 +91,17 @@
     />
   </div>
 </template>
-<script setup>
-import exCss from '@/style/module/primary.module.scss'
-import { nextTick, onMounted, reactive, ref } from 'vue'
-import { delDept, listDept } from '@/api/dept/index.ts'
-import DeptDialog from '@/view/system/component/DeptDialog.vue'
-import { ElMessageBox } from 'element-plus'
-import { zxLoading } from '@/utils/loading'
+<script>
+export default {
+  data() {
+    return {
+      formInline: {
+        deptName: "",
+      },
+    }
+  }
+}
+
 
 const deptEl = ref()
 const state = reactive({
@@ -109,9 +127,7 @@ const onReset = () => {
 }
 // 公用的查询方法
 const getData = () => {
-  zxLoading.show()
-  listDept(state.pages)
-    .then((res) => {
+  deptAll().then((res) => {
       state.tableData = handTree(res.data)
     })
     .finally(() => {
