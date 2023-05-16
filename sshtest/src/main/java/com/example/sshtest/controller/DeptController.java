@@ -28,7 +28,7 @@ public class DeptController {
         return R.SUCCESS(deptService.treeList());
     }
 
-    @GetMapping("/findByMenuName")
+    @GetMapping("/findByDeptName")
     public R<PageVO<Dept>> findByDeptName(@RequestBody Dept Dept){
         return R.SUCCESS(deptService.findByDeptName(Dept.getDeptName()));
     }
