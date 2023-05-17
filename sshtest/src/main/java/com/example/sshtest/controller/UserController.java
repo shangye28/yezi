@@ -10,6 +10,7 @@ import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class UserController {
     private UserDao userDao;
 
     @GetMapping("/view")
-//    @PreAuthorize(value = "hasAuthority('user:view')")
+    @PreAuthorize(value = "hasAuthority('user:view')")
     public R<PageVO<User>> findAll(){
         return R.SUCCESS(userService.findAll());
     }

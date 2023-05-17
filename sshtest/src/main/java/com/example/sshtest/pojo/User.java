@@ -1,12 +1,14 @@
 package com.example.sshtest.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -15,7 +17,7 @@ import static javax.persistence.FetchType.LAZY;
  */
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "user",strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
@@ -75,13 +77,16 @@ public class User {
         this.userId = userId;
     }
 
+
     public String getUsername() {
         return username;
     }
 
+
     public void setUsername(String username) {
         this.username = username;
     }
+
 
     public String getPassword() {
         return password;
@@ -195,5 +200,45 @@ public class User {
                 ", roles=" + roles +
                 ", dept=" + dept +
                 '}';
+    }
+
+
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    /*权限集合*/
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return permissions;
+    }
+
+    @JsonIgnore
+    /*封装权限集合*/
+    private List<SimpleGrantedAuthority> permissions = new ArrayList<>();
+
+    public List<SimpleGrantedAuthority> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<SimpleGrantedAuthority> permissions) {
+        this.permissions = permissions;
     }
 }

@@ -61,6 +61,16 @@ public class LoginController {
         return principal;
     }
 
+    @RequestMapping("/welcome")
+    public String welcome(){
+        return "welcome";
+    }
+
+    @RequestMapping("/fail")
+    public String fail(){
+        return "fail";
+    }
+
 //    /**
 //     * 获取用户信息
 //     *

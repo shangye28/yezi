@@ -1,5 +1,10 @@
 package com.example.sshtest.config;
 
+import com.example.sshtest.security.AppAccessDeniedHandler;
+import com.example.sshtest.security.AppAuthenticationFailureHandler;
+import com.example.sshtest.security.AppAuthenticationSuccessHandler;
+import com.example.sshtest.security.AppLogoutSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +21,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
+    /*注入 登录成功处理器*/
+    @Autowired
+    private AppAuthenticationSuccessHandler appAuthenticationSuccessHandler;
+
+    /*注入 登录 失败处理器*/
+    @Autowired
+    private AppAuthenticationFailureHandler appAuthenticationFailureHandler;
+
+    /*注入  没有权限处理器*/
+    @Autowired
+    private AppAccessDeniedHandler appAccessDeniedHandler;
+
+    /*注入 登出成功处理器*/
+    @Autowired
+    private AppLogoutSuccessHandler appLogoutSuccessHandler;
+
+
+
     private static final String URL_WHITELIST[] = {
             "/login",
             "/logout",
@@ -43,6 +66,7 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         //登录配置
                 .formLogin()
+                .successForwardUrl("/welcome").failureForwardUrl("/fail")
 //                .successHandler()
 //                .failureHandler()
 //        .and()
@@ -57,8 +81,16 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
         //拦截配置
         .and()
                 .authorizeRequests()
-                .antMatchers(URL_WHITELIST).permitAll()
-                .anyRequest().authenticated();
+//                .antMatchers(URL_WHITELIST).permitAll()
+//                .anyRequest().authenticated();
+                //匹配资源与权限   资源                                   权限（角色）
+                .antMatchers("/user/view").hasAnyAuthority("user:view")
+                .antMatchers("/dept/view").hasAnyAuthority("dept:view")
+                .antMatchers("/menu/view").hasAnyAuthority("menu:view")
+                .antMatchers("/role/view").hasAnyAuthority("role:view")
+                //给 父路径下 其所有资源 配置  权限 （觉得）
+                .antMatchers("/user/**").hasRole("ADMIN");
+
 
         //登录异常配置
 

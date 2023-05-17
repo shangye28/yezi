@@ -30,6 +30,16 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     }
 
     @Override
+    public List<String> getPermissionByUsername(String username) {
+        String hql = "SELECT permission FROM menu LEFT JOIN role_menu  ON menu.`menu_id` = role_menu.`menu_id` WHERE role_id IN \n" +
+                "(SELECT role_id FROM USER LEFT JOIN  user_role ON user.user_id = user_role.user_id WHERE username = :deptName)";
+        Query q = this.entityManager.createQuery(hql);
+        q.setParameter("username",username);
+        List<String> list = q.getResultList();
+        return list;
+    }
+
+    @Override
     public Long countByUsername(String username) {
         String hql = "select count(*) from User where username like concat('%', :username, '%')";
         Query q = this.entityManager.createQuery(hql);
