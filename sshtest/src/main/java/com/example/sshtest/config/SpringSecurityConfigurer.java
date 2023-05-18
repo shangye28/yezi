@@ -66,7 +66,15 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         //登录配置
                 .formLogin()
-                .successForwardUrl("/welcome").failureForwardUrl("/fail")
+                .usernameParameter("username")//页面表单账号的参数名  默认 为 username
+                .passwordParameter("password")//页面表单密码的参数名   默认 为 password
+                .loginProcessingUrl("/login")// 表单提交的 地址(不需要提供)，登录验证.....
+                .successForwardUrl("/welcome")//登录成功 跳转的路径
+                .failureForwardUrl("/fail")//登录失败 跳转的路径
+                .successHandler(appAuthenticationSuccessHandler)//登录成功处理器
+                .failureHandler(appAuthenticationFailureHandler)//登录失败处理器
+                .permitAll()
+
 //                .successHandler()
 //                .failureHandler()
 //        .and()
@@ -90,6 +98,7 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/role/view").hasAnyAuthority("role:view")
                 //给 父路径下 其所有资源 配置  权限 （觉得）
                 .antMatchers("/user/**").hasRole("ADMIN");
+
 
 
         //登录异常配置

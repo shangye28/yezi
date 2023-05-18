@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,6 @@ public class AppAuthenticationFailureHandler implements AuthenticationFailureHan
         /*设置响应编码 放置乱码*/
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-
         /*将 result 转换为 json数据*/
         String json = null;
         if (e instanceof BadCredentialsException) {

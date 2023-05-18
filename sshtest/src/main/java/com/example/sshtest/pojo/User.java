@@ -17,7 +17,7 @@ import static javax.persistence.FetchType.LAZY;
  */
 @Entity
 @Table(name = "user")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(generator = "user",strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
@@ -203,42 +203,4 @@ public class User implements UserDetails {
     }
 
 
-
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-    /*权限集合*/
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissions;
-    }
-
-    @JsonIgnore
-    /*封装权限集合*/
-    private List<SimpleGrantedAuthority> permissions = new ArrayList<>();
-
-    public List<SimpleGrantedAuthority> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<SimpleGrantedAuthority> permissions) {
-        this.permissions = permissions;
-    }
 }

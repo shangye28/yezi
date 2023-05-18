@@ -2,6 +2,7 @@ package com.example.sshtest.security;
 
 import com.example.sshtest.dao.UserDao;
 import com.example.sshtest.pojo.User;
+import com.example.sshtest.pojo.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,7 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         /*通过账号查询用户*/
         User user = userDao.getByUsername(username);
+        UserDetail userDetail = new UserDetail();
         if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
@@ -46,7 +48,7 @@ public class AppUserDetailsService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(permission));
         }
         /*将权限集合封装到 user对象中*/
-        user.setPermissions(authorities);
-        return user;
+        userDetail.setPermissions(authorities);
+        return userDetail;
     }
 }

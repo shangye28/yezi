@@ -5,10 +5,12 @@ import com.example.sshtest.pojo.User;
 import com.example.sshtest.pojo.dto.LoginDTO;
 import com.example.sshtest.result.R;
 import com.example.sshtest.service.UserService;
+import com.example.sshtest.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,39 +21,39 @@ public class LoginController {
     @Autowired
     private UserDao userDao;
 
+
     @Autowired
     private UserService userService ;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder ;
+    @Autowired
+    private PasswordEncoder passwordEncoder ;
     /**
      * 登录验证
      *
      * @param loginDTO
      * @return
      */
-//    @RequestMapping("/login")
-//    public R userLogin(@RequestBody LoginDTO loginDTO){
-//        System.out.println(loginDTO.getUsername());
-//        System.out.println(loginDTO.getPassword());
-//        String username = loginDTO.getUsername();
-//        String p = loginDTO.getPassword();
-//        //密码加密
-//        String password = MD5Utils.getMD5(p);
-//        User user= userDao.getByUsername(username);
-//        if(user != null && user.getPassword().equals(password)){ //登录成功
-//            //设置token
-//            Map<String,String> hm = new HashMap<>();
-//            hm.put("username",username);
-//            hm.put("userId",String.valueOf(user.getUserId()));
-//            String token = JWTUtils.getToken(hm);
-//            loginDTO.setUserToken(token);
-////            loginDTO.setMenus(userService.menuByName(username));
-//            return R.SUCCESS(loginDTO);
-//        }else{
-//            return R.FAIL();
-//        }
-//    }
+    @RequestMapping("/login")
+    public R userLogin(@RequestBody LoginDTO loginDTO){
+        System.out.println(loginDTO.getUsername());
+        System.out.println(loginDTO.getPassword());
+        String username = loginDTO.getUsername();
+        String p = loginDTO.getPassword();
+        //密码加密
+        User user= userDao.getByUsername(username);
+        if(user != null && passwordEncoder.matches(loginDTO.getPassword(),user.getPassword())){ //登录成功
+            //设置token
+            Map<String,String> hm = new HashMap<>();
+            hm.put("username",username);
+            hm.put("userId",String.valueOf(user.getUserId()));
+            String token = JWTUtils.getToken(hm);
+            loginDTO.setUserToken(token);
+//            loginDTO.setMenus(userService.menuByName(username));
+            return R.SUCCESS(loginDTO);
+        }else{
+            return R.FAIL();
+        }
+    }
     /*推荐使用  */
     @RequestMapping("/getUserInfo2")
     public Object getUserInfo2() {
