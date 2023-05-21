@@ -25,6 +25,10 @@ public class AppAuthenticationFailureHandler implements AuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         System.out.println("登录失败");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String password = bCryptPasswordEncoder.encode("123456");
+        System.out.println(password);
+        System.out.println(bCryptPasswordEncoder.matches("123456",password));
         /*设置响应编码 放置乱码*/
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");

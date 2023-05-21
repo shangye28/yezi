@@ -48,6 +48,10 @@ public class AppUserDetailsService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(permission));
         }
         /*将权限集合封装到 user对象中*/
+        userDetail.setPassword(user.getPassword());
+        userDetail.setUsername(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getUsername());
         userDetail.setPermissions(authorities);
         return userDetail;
     }
