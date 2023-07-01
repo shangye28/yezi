@@ -33,8 +33,8 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 
     @Override
     public List<String> getPermissionByUsername(String username) {
-        String hql = "SELECT permission FROM Menu LEFT JOIN role_menu  ON menu.menu_id = role_menu.menu_id WHERE role_id IN \n" +
-                "(SELECT role_id FROM User LEFT JOIN  user_role ON user.user_id = user_role.user_id WHERE username = :username)";
+        String hql = "SELECT permission FROM MenuEntity LEFT JOIN role_menu  ON menu.menu_id = role_menu.menu_id WHERE role_id IN \n" +
+                "(SELECT role_id FROM UserEntity LEFT JOIN  user_role ON user.user_id = user_role.user_id WHERE username = :username)";
         Query q = this.entityManager.createQuery(hql);
         q.setParameter("username",username);
         List<String> list = q.getResultList();
@@ -43,7 +43,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 
     @Override
     public Long countByUsername(String username) {
-        String hql = "select count(*) from User where username like concat('%', :username, '%')";
+        String hql = "select count(*) from UserEntity where username like concat('%', :username, '%')";
         Query q = this.entityManager.createQuery(hql);
         q.setParameter("username",username);
         Long total = (Long) q.getSingleResult();
@@ -52,7 +52,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 
     @Override
     public Long countByNickname(String nickname) {
-        String hql = "select count(*) from User where nickname like concat('%', :nickname, '%')";
+        String hql = "select count(*) from UserEntity where nickname like concat('%', :nickname, '%')";
         Query q = this.entityManager.createQuery(hql);
         q.setParameter("nickname",nickname);
         Long total = (Long) q.getSingleResult();
@@ -61,7 +61,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 
     @Override
     public Long countByDeptName(String deptName) {
-        String hql = "select count(*) from user left join dept on user.deptId=dept.deptId where dept.deptName=:deptName";
+        String hql = "select count(*) from UserEntity left join DeptEntity on user.deptId=dept.deptId where dept.deptName=:deptName";
         Query q = this.entityManager.createQuery(hql);
         q.setParameter("deptName",deptName);
         Long total = (Long) q.getSingleResult();
