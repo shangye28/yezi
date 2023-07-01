@@ -13,13 +13,13 @@ public class Login {
     return "111!";
   }
 
-  @PreAuthorize("hasRole('ADMIN') and authentication.name=='aaa'")
+  @PreAuthorize("hasRole('USER')")
   @RequestMapping("/helloword2")
   public String hello2(){
     return "222!";
   }
 
-  @PreAuthorize("hasRole('TEST') and authentication.name=='xgt'")
+  @PreAuthorize("hasAuthority('READ_INFO')")
   @RequestMapping("/helloword3")
   public String hello3(){
     return "333!";
