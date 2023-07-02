@@ -14,25 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-//@RequestMapping("/index")
+@RequestMapping("/index")
 public class Login {
 
       @Autowired
       private UserDao userDao;
-
-    @Autowired
-    private JWTUtils jwtUtils;
-
-    @Value("Bearer")
-    private String tokenHead;
-
-    @PostMapping("/admin/login")
-    public String login(@RequestBody UserEntity user, HttpServletRequest request) {
-        /* 在这里验证用户名和密码，验证成功则生成token返回 */
-        System.out.println("--- -- -login");
-        System.out.println(user);
-        return  tokenHead+" "+jwtUtils.generateToken(user.getUsername());  // 生成 Token，返回给客户端
-    }
 
 
       @PreAuthorize("hasRole('Admin') and authentication.name=='admin'")

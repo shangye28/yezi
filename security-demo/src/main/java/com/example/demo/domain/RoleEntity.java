@@ -1,14 +1,11 @@
 package com.example.demo.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
 import static javax.persistence.CascadeType.DETACH;
 
 /**
@@ -54,7 +51,6 @@ public class RoleEntity {
             joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"),
             inverseJoinColumns = @JoinColumn(name = "menuId", referencedColumnName = "menuId"))
     private List<MenuEntity> menuEntities = new ArrayList<>();
-
 
     public Integer getRoleId() {
         return roleId;

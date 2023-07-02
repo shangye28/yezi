@@ -1,12 +1,9 @@
 package com.example.demo.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import static javax.persistence.FetchType.LAZY;
 
 /**
@@ -54,9 +51,6 @@ public class DeptEntity {
     @JsonIgnore     //json输出时忽略，防止出现数据死循环
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deptId", orphanRemoval = true)
     private Set<UserEntity> userEntities = new LinkedHashSet<>();
-
-
-
 
     public Integer getDeptId() {
         return deptId;

@@ -1,7 +1,6 @@
 package com.example.demo.dao.impl;
 
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -11,7 +10,6 @@ import java.util.*;
 public class NativeQuery<T> {
     @PersistenceContext
     protected EntityManager entityManager;
-
 
     public List<T> find(String sql, String key, String value, Class resultClass) {
         Query query = this.entityManager.createQuery(sql, resultClass);

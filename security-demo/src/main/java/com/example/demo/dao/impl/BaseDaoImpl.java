@@ -1,9 +1,7 @@
 package com.example.demo.dao.impl;
 
-
 import com.example.demo.dao.BaseDao;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -14,8 +12,6 @@ import java.util.List;
 @Repository("BaseDao")
 @SuppressWarnings("all")
 public class BaseDaoImpl<T> implements BaseDao<T> {
-
-
     @PersistenceContext
     protected EntityManager entityManager;
 
@@ -59,55 +55,4 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         Long total = (Long) q.getSingleResult();
         return total;
     }
-
-//    public List<T> find(String hql, Class resultClass) {
-//        Query q = this.entityManager.createQuery(hql,resultClass);
-//        List<T> resultList = q.getResultList();
-//        return resultList;
-//    }
-//
-//    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass) {
-//        Query q = this.entityManager.createQuery(hql,resultClass);
-//        Iterator<Map.Entry<String,Object>> entries = parameters.entrySet().iterator();
-//        while (entries.hasNext()) {
-//            Map.Entry<String,Object> entry = entries.next();
-//            q.setParameter(entry.getKey(),entry.getValue());
-//        }
-//
-//        List rows = q.getResultList();
-//        List<T> resultList=new ArrayList<T>();
-//        for (Object obj : rows) {
-//            T row=(T)obj;
-//            resultList.add(row);
-//        }
-//        return resultList;
-//    }
-
-//    public T  get(String hql, Map<String,Object> parameters, Class resultClass) {
-//        List<T> l = this.find(hql, parameters, resultClass);
-//        if (l != null && l.size() > 0) {
-//            return l.get(0);
-//        } else {
-//            return null;
-//        }
-//    }
-//
-//
-//    public Long count(String hql) {
-//        Query q = this.entityManager.createQuery(hql);
-//        Long result = (Long) q.getSingleResult();
-//        return result;
-//    }
-//
-//    public Long count(String hql, Map<String,Object> parameters) {
-//        Query q = this.entityManager.createQuery(hql);
-//        Iterator<Map.Entry<String,Object>> entries = parameters.entrySet().iterator();
-//        while (entries.hasNext()) {
-//            Map.Entry<String,Object> entry = entries.next();
-//            q.setParameter(entry.getKey(),entry.getValue());
-//        }
-//        Long result = (Long) q.getSingleResult();
-//        return result;
-//    }
-//
 }

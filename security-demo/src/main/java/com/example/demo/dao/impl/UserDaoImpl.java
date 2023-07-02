@@ -1,11 +1,9 @@
 package com.example.demo.dao.impl;
 
-
 import com.example.demo.dao.UserDao;
 import com.example.demo.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.Query;
 import java.util.List;
 
@@ -13,6 +11,7 @@ import java.util.List;
 public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
     @Autowired
     private NativeQuery<UserEntity> nativeQuery;
+
     @Override
     public List<UserEntity> findByUsername(String username) {
         String hql = "from UserEntity where username like concat('%', :username, '%')";
@@ -73,112 +72,4 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
         String hql = "from UserEntity where username=:username";
         return nativeQuery.get(hql,"username", username, UserEntity.class);
     }
-
-
-//    private BaseDao<UserEntity> baseDao;
-//
-//    public BaseDao<UserEntity> getBaseDao() {
-//        return baseDao;
-//    }
-//    @Autowired
-//    public void setBaseDao(BaseDao<UserEntity> baseDao) {
-//        this.baseDao = baseDao;
-//    }
-//
-//    @Override
-//    public List<UserEntity> findByAll() {
-//        String hql = "from UserEntity";
-//        return baseDao.find(hql, UserEntity.class);
-//    }
-//
-//    @Override
-//    public List<UserEntity> findByUsername(String username) {
-//        String hql = "from UserEntity where username like :username";
-//        String n = "%" + username + "%";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("username",n);
-//        return baseDao.find(hql, m, UserEntity.class);
-//    }
-//
-//    @Override
-//    public List<UserEntity> findByNickname(String nickname) {
-//        String hql = "from UserEntity where nickname like :nickname";
-//        String n = "%" + nickname + "%";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("nickname",n);
-//        return baseDao.find(hql, m, UserEntity.class);
-//    }
-//
-//    @Override
-//    public UserEntity getByUsername(String username){
-//        String hql = "from UserEntity where username=:username";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("username",username);
-//        return baseDao.get(hql, m, UserEntity.class);
-//    }
-//
-//    @Override
-//    public UserEntity getByUserId(Integer id){
-//        String hql = "from UserEntity where user_id=:userId";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("userId",id);
-//        return baseDao.get(hql, m, UserEntity.class);
-//    }
-//
-//
-//    @Override
-//    public UserEntity getByEmail(String email){
-//        String hql = "from UserEntity where email=:email";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("email",email);
-//        return baseDao.get(hql, m, UserEntity.class);
-//    }
-//
-//    @Override
-//    public UserEntity getByPhone(String phone){
-//        String hql = "from UserEntity where phone=:phone";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("phone",phone);
-//        return baseDao.get(hql, m, UserEntity.class);
-//    }
-//
-//
-//    @Override
-//    public Long countAll(){
-//        String hql = "select count(*) from UserEntity";
-//        return baseDao.count(hql);
-//    }
-//
-//    @Override
-//    public Long countUsername(String str){
-//        String hql = "select count(*) from UserEntity where username like :username";
-//        String n = "%" + str + "%";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("username",n);
-//        return baseDao.count(hql, m);
-//    }
-//
-//    @Override
-//    public Long countNickname(String str){
-//        String hql = "select count(*) from UserEntity where nickname like :nickname";
-//        String n = "%" + str + "%";
-//        Map<String,Object> m = new HashMap<>();
-//        m.put("nickname",n);
-//        return baseDao.count(hql, m);
-//    }
-//
-//    @Override
-//    public void delete(UserEntity user) {
-//        baseDao.delete(user);
-//    }
-//
-//    @Override
-//    public void save(UserEntity user) {
-//        baseDao.save(user);
-//    }
-//
-//    @Override
-//    public void updata(UserEntity user){
-//        baseDao.update(user);
-//    }
 }

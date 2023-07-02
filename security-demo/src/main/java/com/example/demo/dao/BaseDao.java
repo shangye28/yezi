@@ -1,9 +1,6 @@
 package com.example.demo.dao;
 
-
-
 import java.util.List;
-
 
 public interface BaseDao<T>{
     /**
@@ -49,49 +46,4 @@ public interface BaseDao<T>{
      * @return
      */
     public Long count();
-
-//
-//
-//    /**
-//     * 查询集合
-//     *
-//     * @param hql
-//     * @return
-//     */
-//    public List<T> find(String hql, Class resultClass);
-//
-//    /**
-//     * 查询集合
-//     *
-//     * @param hql
-//     * @param parameters
-//     * @return
-//     */
-//    public List<T> find(String hql, Map<String,Object> parameters, Class resultClass);
-//
-//    /**
-//     * 获得一个对象
-//     *
-//     * @param hql
-//     * @param parameters
-//     * @return Object
-//     */
-//    public T get(String hql, Map<String,Object> parameters, Class resultClass);
-//
-//    /**
-//     * select count(*) from 类
-//     *
-//     * @param hql
-//     * @return
-//     */
-//    public Long count(String hql);
-//
-//    /**
-//     * select count(*) from 类
-//     *
-//     * @param hql
-//     * @param parameters
-//     * @return
-//     */
-//    public Long count(String hql, Map<String,Object> parameters);
 }

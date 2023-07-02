@@ -1,8 +1,6 @@
 package com.example.demo.dao;
 
-
 import com.example.demo.domain.MenuEntity;
-
 import java.util.List;
 
 public interface MenuDao extends BaseDao<MenuEntity> {

@@ -1,12 +1,9 @@
 package com.example.demo.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import static javax.persistence.FetchType.LAZY;
 
 /**
@@ -67,7 +64,6 @@ public class MenuEntity {
             inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId"))
     private Set<RoleEntity> roleEntities = new LinkedHashSet<>();
 
-
     public Integer getMenuId() {
         return menuId;
     }
@@ -83,7 +79,6 @@ public class MenuEntity {
     public void setMenuName(String menuName) {
         this.menuName = menuName;
     }
-
 
     public String getParentId() {
         return parentId;

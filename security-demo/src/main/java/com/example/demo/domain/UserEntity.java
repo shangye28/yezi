@@ -1,14 +1,9 @@
 package com.example.demo.domain;
 
-
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * 用户信息
@@ -75,16 +70,13 @@ public class UserEntity {
         this.userId = userId;
     }
 
-
     public String getUsername() {
         return username;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getPassword() {
         return password;
@@ -186,7 +178,6 @@ public class UserEntity {
         return "UserEntity{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
@@ -199,6 +190,4 @@ public class UserEntity {
                 ", deptEntity=" + deptEntity +
                 '}';
     }
-
-
 }
