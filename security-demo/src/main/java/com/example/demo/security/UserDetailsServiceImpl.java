@@ -29,9 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     List<GrantedAuthority> authorities = new ArrayList<>();
     List<RoleEntity> roles = user.getRoleEntities();
     for (RoleEntity role : roles) {
+      //添加角色信息
       authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleKey()));
       List<MenuEntity> permissions = role.getMenuEntities();
       for (MenuEntity permission : permissions) {
+        //添加权限信息
         authorities.add(new SimpleGrantedAuthority(permission.getPermission()));
       }
     }

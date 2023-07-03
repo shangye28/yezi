@@ -37,13 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
             .antMatchers(HttpMethod.GET, // 允许对于网站静态资源的无授权访问
                     "/",
-                    "/*.html",
-                    "/favicon.ico",
-                    "/**/*.html",
-                    "/**/*.css",
-                    "/**/*.js",
-                    "/swagger-resources/**",
-                    "/v2/api-docs/**"
+                    "/favicon.ico"
             )
             .permitAll()
             .antMatchers("/login", "/register")// 对登录注册要允许匿名访问

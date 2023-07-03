@@ -12,14 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -40,6 +37,7 @@ public class LoginController {
 
     @Value("Bearer")
     private String tokenHead;
+
     /**
      * 登录验证
      *
@@ -60,6 +58,17 @@ public class LoginController {
         }
         return  R.FAIL();
     }
+
+//    @Autowired
+//    private LogoutHandler logoutHandler;
+//
+//    @PostMapping(value = "/logout1")
+//    public R logout(HttpServletRequest request, HttpServletResponse response) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        logoutHandler.logout(request, response, auth); // 执行退出登录逻辑
+//        return R.SUCCESS(); // 重定向到登录页面，并携带注销成功的参数
+//    }
+
 //    /*推荐使用  */
 //    @RequestMapping("/getUserInfo2")
 //    public Object getUserInfo2() {
