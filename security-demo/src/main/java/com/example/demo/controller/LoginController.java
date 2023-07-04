@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -59,58 +60,14 @@ public class LoginController {
         return  R.FAIL();
     }
 
-//    @Autowired
-//    private LogoutHandler logoutHandler;
-//
-//    @PostMapping(value = "/logout1")
-//    public R logout(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        logoutHandler.logout(request, response, auth); // 执行退出登录逻辑
-//        return R.SUCCESS(); // 重定向到登录页面，并携带注销成功的参数
-//    }
-
-//    /*推荐使用  */
-//    @RequestMapping("/getUserInfo2")
-//    public Object getUserInfo2() {
-//        /*从安全上下文中获取 用户 认证对象（用户信息）*/-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Object principal = authentication.getPrincipal();
-//        return principal;
-//    }
-
-    @RequestMapping("/welcome")
-    public String welcome(){
-        return "welcome";
+    @PostMapping("/logout")
+    public R logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.invalidate(); // 清空会话
+        }
+        response.setHeader("Authorization", ""); // 清空Token
+        return  R.SUCCESS();
     }
 
-    @RequestMapping("/fail")
-    public String fail(){
-        return "fail";
-    }
-
-//    /**
-//     * 获取用户信息
-//     *
-//     * @return 用户信息
-//     */
-//    @GetMapping("getInfo")
-//    public R getInfo()
-//    {
-//        User user = SecurityUtils.getLoginUser().getUser();
-//        // 角色集合
-//        Set<String> roles = permissionService.getRolePermission(user);
-//        // 权限集合
-//        Set<String> permissions = permissionService.getMenuPermission(user);
-//        AjaxResult ajax = AjaxResult.success();
-//        ajax.put("user", user);
-//        ajax.put("roles", roles);
-//        ajax.put("permissions", permissions);
-//        return ajax;
-//    }
-
-//
-//    @PostMapping(value = "/login")
-//    public R login(@RequestBody LoginDTO loginDTO) {
-//        return userService.login(loginDTO);
-//    }
 }
