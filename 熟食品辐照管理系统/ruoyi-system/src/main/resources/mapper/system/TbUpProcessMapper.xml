@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TbUpProcessMapper">
+    
+    <resultMap type="TbUpProcess" id="TbUpProcessResult">
+        <result property="id"    column="id"    />
+        <result property="radiNo"    column="radi_no"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="goodsNo"    column="goods_no"    />
+        <result property="goodsDime"    column="goods_dime"    />
+        <result property="boxNo"    column="box_no"    />
+        <result property="goodsNumber"    column="goods_number"    />
+        <result property="loadMan"    column="load_man"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="note1"    column="note1"    />
+        <result property="note2"    column="note2"    />
+        <result property="note3"    column="note3"    />
+    </resultMap>
+
+    <sql id="selectTbUpProcessVo">
+        select id, radi_no, goods_name, goods_no, goods_dime, box_no, goods_number, load_man, start_date, end_date, note1, note2, note3 from tb_up_process
+    </sql>
+
+    <select id="selectTbUpProcessList" parameterType="TbUpProcess" resultMap="TbUpProcessResult">
+        <include refid="selectTbUpProcessVo"/>
+        <where>  
+            <if test="radiNo != null  and radiNo != ''"> and radi_no = #{radiNo}</if>
+            <if test="loadMan != null  and loadMan != ''"> and load_man = #{loadMan}</if>
+        </where>
+    </select>
+    
+    <select id="selectTbUpProcessById" parameterType="Long" resultMap="TbUpProcessResult">
+        <include refid="selectTbUpProcessVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTbUpProcess" parameterType="TbUpProcess" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_up_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="radiNo != null and radiNo != ''">radi_no,</if>
+            <if test="goodsName != null and goodsName != ''">goods_name,</if>
+            <if test="goodsNo != null and goodsNo != ''">goods_no,</if>
+            <if test="goodsDime != null and goodsDime != ''">goods_dime,</if>
+            <if test="boxNo != null and boxNo != ''">box_no,</if>
+            <if test="goodsNumber != null">goods_number,</if>
+            <if test="loadMan != null and loadMan != ''">load_man,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="note1 != null">note1,</if>
+            <if test="note2 != null">note2,</if>
+            <if test="note3 != null">note3,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="radiNo != null and radiNo != ''">#{radiNo},</if>
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="goodsNo != null and goodsNo != ''">#{goodsNo},</if>
+            <if test="goodsDime != null and goodsDime != ''">#{goodsDime},</if>
+            <if test="boxNo != null and boxNo != ''">#{boxNo},</if>
+            <if test="goodsNumber != null">#{goodsNumber},</if>
+            <if test="loadMan != null and loadMan != ''">#{loadMan},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="note1 != null">#{note1},</if>
+            <if test="note2 != null">#{note2},</if>
+            <if test="note3 != null">#{note3},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTbUpProcess" parameterType="TbUpProcess">
+        update tb_up_process
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="radiNo != null and radiNo != ''">radi_no = #{radiNo},</if>
+            <if test="goodsName != null and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="goodsNo != null and goodsNo != ''">goods_no = #{goodsNo},</if>
+            <if test="goodsDime != null and goodsDime != ''">goods_dime = #{goodsDime},</if>
+            <if test="boxNo != null and boxNo != ''">box_no = #{boxNo},</if>
+            <if test="goodsNumber != null">goods_number = #{goodsNumber},</if>
+            <if test="loadMan != null and loadMan != ''">load_man = #{loadMan},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="note1 != null">note1 = #{note1},</if>
+            <if test="note2 != null">note2 = #{note2},</if>
+            <if test="note3 != null">note3 = #{note3},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTbUpProcessById" parameterType="Long">
+        delete from tb_up_process where id = #{id}
+    </delete>
+
+    <delete id="deleteTbUpProcessByIds" parameterType="String">
+        delete from tb_up_process where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

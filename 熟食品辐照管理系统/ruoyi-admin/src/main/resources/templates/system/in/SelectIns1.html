@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('关联系统用户')" />
+</head>
+
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="role-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>辐照批号：</label>
+                            <input type="text" name="radiNo"/>
+                        </li>
+                        <li>
+                            <label>客户名称：</label>
+                            <input type="text" name="guestName"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var datas = [[${@dict.getType('sys_normal_disable')}]];
+    var prefix = ctx + "system/in";
+    // var prefix = ctx + "system/user";
+
+    $(function() {
+        var options = {
+            url: prefix + "/SelectIns1",
+            // url: prefix + "/list",
+            modalName: "用户",
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            clickToSelect: true,
+            rememberSelected: false,
+            columns: [{
+                field: 'state',
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '序号',
+                    visible: false
+                },
+                {
+                    field: 'radiNo',
+                    title: '辐照批号'
+                },
+                {
+                    field: 'goodsName',
+                    title: '产品名称'
+                },
+                {
+                    field: 'goodsNo',
+                    title: '产品批号'
+                },
+                {
+                    field: 'goodsDime',
+                    title: '产品规格'
+                }]
+        };
+        $.table.init(options);
+    });
+    /* 添加用户-选择用户-提交 */
+    function submitHandler() {
+        var rows = $.table.selectFirstColumns();
+        if (rows.length == 0) {
+            $.modal.alertWarning("请选择一条记录");
+            return;
+        }
+        if (rows.length > 1) {
+            $.modal.alertWarning("请只选择一条记录");
+            return;
+        }
+        $.modal.confirm('确定要选该系统数据吗？', /*   form-punish-add  form-punish-edit  form-message-add guestName   */
+            function() {
+                parent.$('#form-craft-add input[name=guestName]').val($.table.selectColumns("guestName"));
+                parent.$('#form-craft-add input[name=radiNo]').val($.table.selectColumns("radiNo"));
+                parent.$('#form-craft-add input[name=goodsName]').val($.table.selectColumns("goodsName"));
+                parent.$('#form-craft-add input[name=goodsNo]').val($.table.selectColumns("goodsNo"));
+                parent.$('#form-craft-add input[name=goodsDime]').val($.table.selectColumns("goodsDime"));
+                parent.$('#form-craft-edit input[name=guestName]').val($.table.selectColumns("guestName"));
+                parent.$('#form-craft-edit input[name=radiNo]').val($.table.selectColumns("radiNo"));
+                parent.$('#form-craft-edit input[name=goodsName]').val($.table.selectColumns("goodsName"));
+                parent.$('#form-craft-edit input[name=goodsNo]').val($.table.selectColumns("goodsNo"));
+                parent.$('#form-craft-edit input[name=goodsDime]').val($.table.selectColumns("goodsDime"));
+                $.modal.close();
+            }
+        );
+        // $.modal.close();
+        // $.operate.save(prefix + "/selectAll", data);
+    }
+</script>
+</body>
+</html>
